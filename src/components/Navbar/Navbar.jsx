@@ -1,10 +1,73 @@
 import React from 'react';
+import { Link, NavLink } from 'react-router';
 
 const Navbar = () => {
+    const links = (
+      <>
+        <li>
+         <NavLink className='hover:bg-secondary' to='/'>Home</NavLink>
+        </li>
+        <li>
+         <NavLink to='/tuitions'>Tuitions</NavLink>
+        </li>
+        <li>
+         <NavLink to='/tutors'>Tutors</NavLink>
+        </li>
+        <li>
+         <NavLink to='/about'>About</NavLink>
+        </li>
+        <li>
+         <NavLink to='/contact'>Contact</NavLink>
+        </li>
+
+    
+      </>
+    );
     return (
-        <div>
-            <h1>this is navbar</h1>
+      <div className="navbar bg-primary shadow-sm text-neutral">
+        <div className="navbar-start">
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {" "}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />{" "}
+              </svg>
+            </div>
+            <ul
+              tabIndex="-1"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            >
+              {links}
+            </ul>
+          </div>
+          <Link>
+            <span className="text-white font-bold text-xl">
+              e<span className="text-accent">T</span>
+              uition
+              <span className="text-accent">BD</span>
+            </span>
+          </Link>
         </div>
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1">{links}</ul>
+        </div>
+        <div className="navbar-end">
+          <Link to="/login" className="btn bg-secondary border-0 shadow-none text-neutral hover:bg-teal-600 ">
+            Login
+          </Link>
+        </div>
+      </div>
     );
 };
 

@@ -1,28 +1,42 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router';
+import useAuth from '../../hooks/useAuth';
 
 const Navbar = () => {
+  const { logoutUser } = useAuth();
+  const {user}=useAuth();
     const links = (
       <>
         <li>
-         <NavLink className='hover:bg-secondary' to='/'>Home</NavLink>
+          <NavLink className="hover:bg-secondary" to="/">
+            Home
+          </NavLink>
+        </li>
+      
+          <li>
+            <NavLink to="/tuitions">Tuitions</NavLink>
+          </li>
+  
+        <li>
+          <NavLink to="/tutors">Tutors</NavLink>
         </li>
         <li>
-         <NavLink to='/tuitions'>Tuitions</NavLink>
+          <NavLink to="/about">About</NavLink>
         </li>
         <li>
-         <NavLink to='/tutors'>Tutors</NavLink>
+          <NavLink to="/contact">Contact</NavLink>
         </li>
-        <li>
-         <NavLink to='/about'>About</NavLink>
-        </li>
-        <li>
-         <NavLink to='/contact'>Contact</NavLink>
-        </li>
-
-    
       </>
     );
+
+    const handleLogout=()=>{
+      logoutUser()
+      .then(()=>{
+        console.log('user logged out')
+      })
+      .catch(error=>console.log(error))
+
+    }
     return (
       <div className="navbar bg-primary shadow-sm text-neutral">
         <div className="navbar-start">
@@ -63,9 +77,20 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-          <Link to="/login" className="btn bg-secondary border-0 shadow-none text-neutral hover:bg-teal-600 ">
-            Login
-          </Link>
+          <p className="text-accent font-bold px-4">{user && user?.displayName}</p>
+
+          {user ? (
+            <button 
+            onClick={handleLogout}
+            className='btn bg-accent border-0 shadow-none btn-sm'>Logout</button>
+          ) : (
+            <Link
+              to="/login"
+              className="btn bg-secondary border-0 shadow-none text-neutral hover:bg-teal-600 "
+            >
+              Login
+            </Link>
+          )}
         </div>
       </div>
     );

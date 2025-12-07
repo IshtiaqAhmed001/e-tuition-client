@@ -7,6 +7,7 @@ import About from "../pages/About/About";
 import Contact from "../pages/Contact/Contact";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +16,11 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: "/tuitions", Component: Tuitions },
-      { path: "/tutors", Component: Tutors },
+      { path: "/tutors", element: 
+        <PrivateRoute>
+          <Tutors/>
+        </PrivateRoute>
+       },
       { path: "/about", Component: About },
       { path: "/contact", Component: Contact },
     ],

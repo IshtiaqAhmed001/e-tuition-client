@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
+import useAuth from "../../../hooks/useAuth";
 
 const Register = () => {
   const {
@@ -10,8 +11,30 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  const { registerUser, user,updateUser, setUser, setLoading } = useAuth();
+
   const handleRegister = (data) => {
-    console.log("register submitted: ", data);
+    // update user profile to firebase
+    const updatedProfile = {
+      displayName: data.name,
+      photoURL: data.photo,
+    };
+
+    registerUser(data.email, data.password)
+      .then((data) => {
+        setUser(data.user);
+        console.log(data.user);
+        setLoading(false);
+        // update user profile to firebase
+        updateUser(updatedProfile)
+          .then(() => {
+            console.log("Profile updated successfully!");
+          })
+          .catch((error) => console.log(error.message));
+      })
+      .catch((error) => {
+        console.log(error.code, error.message);
+      });
   };
 
   return (

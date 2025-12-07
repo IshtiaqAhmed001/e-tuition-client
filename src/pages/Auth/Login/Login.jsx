@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
@@ -13,12 +13,14 @@ const Login = () => {
   } = useForm();
 
   const {loginUser,setUser}=useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleLogin = (data) => {
    loginUser(data.email,data.password)
    .then(data=>{
     setUser(data.user);
-    console.log(data.user)
+    navigate(location.state || "/")
    })
    .catch(error=>{
     console.log(error.code,error.message)

@@ -19,11 +19,20 @@ export const router = createBrowserRouter([
       { index: true, Component: Home },
       {
         path: "/tuitions",
-        Component: Tuitions,
-        hydrateFallbackElement:<Loading/>,
+        element: <PrivateRoute>
+          <Tuitions/>
+        </PrivateRoute>,
+        hydrateFallbackElement: <Loading />,
         loader: () => fetch("/tuitionListings.json").then((res) => res.json()),
       },
-      { path: "/tutors", Component: Tutors },
+      {
+        path: "/tutors",
+        element: <PrivateRoute>
+          <Tutors/>
+        </PrivateRoute>,
+        hydrateFallbackElement: <Loading />,
+        loader: () => fetch("/tutorsData.json").then((res) => res.json()),
+      },
       { path: "/about", Component: About },
       { path: "/contact", Component: Contact },
       {
@@ -38,6 +47,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    Component: DashboardLayout ,
+    Component: DashboardLayout,
   },
 ]);

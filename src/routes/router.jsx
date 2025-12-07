@@ -5,6 +5,8 @@ import Tuitions from "../pages/Tuitions/Tuitions";
 import Tutors from "../pages/Tutors/Tutors";
 import About from "../pages/About/About";
 import Contact from "../pages/Contact/Contact";
+import Login from "../pages/Auth/Login/Login";
+import Register from "../pages/Auth/Register/Register";
 
 export const router = createBrowserRouter([
   {
@@ -12,11 +14,18 @@ export const router = createBrowserRouter([
     Component: RootLayout,
     children: [
       { index: true, Component: Home },
-      {path:'/tuitions', Component: Tuitions },
-      {path:'/tutors', Component: Tutors },
-      {path:'/about', Component: About },
-      {path:'/contact', Component: Contact },
-
+      { path: "/tuitions", Component: Tuitions },
+      { path: "/tutors", Component: Tutors },
+      { path: "/about", Component: About },
+      { path: "/contact", Component: Contact },
     ],
+  },
+  {
+    path: "/login",
+    Component: Login,
+  },
+  {
+    path: "/register",
+    Component: Register,
   },
 ]);

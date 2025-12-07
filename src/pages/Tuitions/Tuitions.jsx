@@ -6,7 +6,7 @@ const Tuitions = () => {
   const tuitionsData = useLoaderData() || [];
 
   return (
-    <div className="max-w-11/12 mx-auto py-12 space-y-10">
+    <div className="max-w-7xl mx-auto py-12 space-y-10">
       <h1 className="text-3xl font-bold text-center text-primary">
         Current Tuition Listings
       </h1>

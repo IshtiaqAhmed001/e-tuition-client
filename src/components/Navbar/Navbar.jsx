@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router';
 import useAuth from '../../hooks/useAuth';
+import Logo from '../Logo/Logo';
 
 const Navbar = () => {
   const { logoutUser } = useAuth();
@@ -38,8 +39,8 @@ const Navbar = () => {
 
     }
     return (
-      <div className="bg-primary ">
-        <div className="navbar  shadow-sm text-neutral max-w-11/12 mx-auto">
+      <div className="bg-primary  sticky top-0 z-50">
+        <div className="navbar  shadow-sm text-neutral max-w-7xl mx-auto">
           <div className="navbar-start">
             <div className="dropdown">
               <div
@@ -65,21 +66,17 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex="-1"
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+                className="menu menu-sm dropdown-content bg-primary rounded-box z-1 mt-3 w-52 p-2 shadow"
               >
                 {links}
               </ul>
             </div>
             <Link>
-              <span className="text-white font-bold text-xl">
-                e<span className="text-accent">T</span>
-                uition
-                <span className="text-accent">BD</span>
-              </span>
+              <Logo />
             </Link>
           </div>
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">{links}</ul>
+            <ul className="menu menu-horizontal px-1 flex gap-2">{links}</ul>
           </div>
           <div className="navbar-end">
             <p className="text-accent font-bold px-4">

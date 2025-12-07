@@ -41,7 +41,7 @@ const Tuition = ({ tuition }) => {
       <div className="flex justify-between items-center mt-6">
         {/* Status badge */}
         <span
-          className={`badge border-0 px-4 py-2 rounded-full shadow-sm ${
+          className={`badge border-0 px-4 p-4 rounded-full shadow-sm ${
             tuition.status === "Approved"
               ? "bg-secondary text-white"
               : "bg-accent text-black"

@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router";
-import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import SocialLogin from "../../../components/SocialLogin/SocialLogin";
 
 const Register = () => {
   const {
@@ -11,7 +12,9 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const { registerUser, user,updateUser, setUser, setLoading } = useAuth();
+  const { registerUser,  updateUser, setUser, setLoading } = useAuth();
+
+  const axiosPublic = useAxiosPublic();
 
   const handleRegister = (data) => {
     // update user profile to firebase
@@ -21,14 +24,25 @@ const Register = () => {
     };
 
     registerUser(data.email, data.password)
-      .then((data) => {
-        setUser(data.user);
-        console.log(data.user);
+      .then((result) => {
+        setUser(result.user);
+        console.log(result.user);
         setLoading(false);
         // update user profile to firebase
         updateUser(updatedProfile)
           .then(() => {
-            console.log("Profile updated successfully!");
+            const userInfo = {
+              name: data.name,
+              email: data.email,
+              photo: data.photo,
+            };
+
+            axiosPublic
+              .post("/users", userInfo)
+              .then((res) => {
+                console.log("user data stored to DB: ", res.data);
+              })
+              .catch((error) => console.log(error));
           })
           .catch((error) => console.log(error.message));
       })
@@ -111,13 +125,7 @@ const Register = () => {
 
           <button className="btn btn-primary w-full mb-3">Register</button>
 
-          <button
-            type="button"
-            className="btn w-full gap-2 bg-white border border-gray-300 hover:bg-base-200"
-          >
-            <FcGoogle className="text-xl" />
-            Continue with Google
-          </button>
+          <SocialLogin />
         </form>
 
         <p className="text-center mt-4">

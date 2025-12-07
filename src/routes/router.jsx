@@ -8,6 +8,8 @@ import Contact from "../pages/Contact/Contact";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import PrivateRoute from "./PrivateRoute";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Loading from "../components/Loading/Loading";
 
 export const router = createBrowserRouter([
   {
@@ -15,22 +17,27 @@ export const router = createBrowserRouter([
     Component: RootLayout,
     children: [
       { index: true, Component: Home },
-      { path: "/tuitions", 
+      {
+        path: "/tuitions",
         Component: Tuitions,
-        loader:()=>fetch('/tuitionListings.json').then(res=>res.json())
-       },
-      { path: "/tutors", Component: Tutors
-       },
+        hydrateFallbackElement:<Loading/>,
+        loader: () => fetch("/tuitionListings.json").then((res) => res.json()),
+      },
+      { path: "/tutors", Component: Tutors },
       { path: "/about", Component: About },
       { path: "/contact", Component: Contact },
+      {
+        path: "/login",
+        Component: Login,
+      },
+      {
+        path: "/register",
+        Component: Register,
+      },
     ],
   },
   {
-    path: "/login",
-    Component: Login,
-  },
-  {
-    path: "/register",
-    Component: Register,
+    path: "/dashboard",
+    Component: DashboardLayout ,
   },
 ]);

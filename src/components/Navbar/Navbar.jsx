@@ -13,11 +13,11 @@ const Navbar = () => {
             Home
           </NavLink>
         </li>
-      
-          <li>
-            <NavLink to="/tuitions">Tuitions</NavLink>
-          </li>
-  
+
+        <li>
+          <NavLink to="/tuitions">Tuitions</NavLink>
+        </li>
+
         <li>
           <NavLink to="/tutors">Tutors</NavLink>
         </li>
@@ -27,6 +27,11 @@ const Navbar = () => {
         <li>
           <NavLink to="/contact">Contact</NavLink>
         </li>
+        {user && (
+          <NavLink to="/dashboard" className="btn bg-accent btn-sm border-0 shadow-none">
+            Dashboard
+          </NavLink>
+        )}
       </>
     );
 

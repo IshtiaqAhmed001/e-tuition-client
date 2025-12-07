@@ -2,8 +2,8 @@ import React from 'react';
 
 const Tutors = () => {
     return (
-        <div>
-            <h1>This is tutors</h1>
+        <div className='max-w-7xl mx-auto'>
+        
         </div>
     );
 };

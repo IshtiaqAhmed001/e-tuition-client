@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
+import SocialLogin from "../../../components/SocialLogin/SocialLogin";
 
 const Login = () => {
   const {
@@ -65,16 +66,9 @@ const Login = () => {
           </div>
 
           {/* Login button */}
-          <button className="btn btn-primary w-full mb-3">Login</button>
+          <button type="submit" className="btn btn-primary w-full mb-3">Login</button>
 
-          {/* Google Login */}
-          <button
-            type="submit"
-            className="btn w-full gap-2 bg-white border border-gray-300 hover:bg-base-200"
-          >
-            <FcGoogle className="text-xl" />
-            Continue with Google
-          </button>
+       <SocialLogin/>
         </form>
 
         {/* register link */}

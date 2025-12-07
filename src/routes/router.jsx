@@ -15,11 +15,11 @@ export const router = createBrowserRouter([
     Component: RootLayout,
     children: [
       { index: true, Component: Home },
-      { path: "/tuitions", Component: Tuitions },
-      { path: "/tutors", element: 
-        <PrivateRoute>
-          <Tutors/>
-        </PrivateRoute>
+      { path: "/tuitions", 
+        Component: Tuitions,
+        loader:()=>fetch('/tuitionListings.json').then(res=>res.json())
+       },
+      { path: "/tutors", Component: Tutors
        },
       { path: "/about", Component: About },
       { path: "/contact", Component: Contact },

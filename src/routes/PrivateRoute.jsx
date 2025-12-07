@@ -9,6 +9,9 @@ const PrivateRoute = ({ children }) => {
   if (loading) {
     return <Loading />;
   }
+  if(!user){
+    return <Navigate to='/'></Navigate>
+  }
   return children;
 };
 

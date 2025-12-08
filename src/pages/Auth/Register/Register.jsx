@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
@@ -12,7 +12,10 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const { registerUser,  updateUser, setUser, setLoading } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const { registerUser, updateUser, setUser, setLoading } = useAuth();
 
   const axiosPublic = useAxiosPublic();
 
@@ -26,7 +29,6 @@ const Register = () => {
     registerUser(data.email, data.password)
       .then((result) => {
         setUser(result.user);
-        console.log(result.user);
         setLoading(false);
         // update user profile to firebase
         updateUser(updatedProfile)
@@ -35,12 +37,14 @@ const Register = () => {
               name: data.name,
               email: data.email,
               photo: data.photo,
+              role: data.role,
             };
 
             axiosPublic
               .post("/users", userInfo)
               .then((res) => {
                 console.log("user data stored to DB: ", res.data);
+                 navigate(location.state || "/");
               })
               .catch((error) => console.log(error));
           })
@@ -104,6 +108,29 @@ const Register = () => {
             />
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">Email is required</p>
+            )}
+          </div>
+
+          {/* Role */}
+          <div className="form-control w-full mb-4">
+            <label className="label">
+              <span className="label-text font-medium">Select Role</span>
+            </label>
+
+            <select
+              {...register("role", { required: true })}
+              className="select select-bordered w-full"
+              defaultValue=""
+            >
+              <option value="" disabled>
+                Choose your role
+              </option>
+              <option value="student">Student</option>
+              <option value="tutor">Tutor</option>
+            </select>
+
+            {errors.role && (
+              <p className="text-red-500 text-sm mt-1">Role is required</p>
             )}
           </div>
 

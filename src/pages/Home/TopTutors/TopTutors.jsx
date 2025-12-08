@@ -17,11 +17,20 @@ const TopTutors = () => {
 
 
   return (
-    <div>
-      <h2>{topTutors.length}</h2>
+    <section className="py-16 bg-neutral">
+      <div className="max-w-7xl mx-auto px-5">
+        {/* section title  */}
+        <h2 className="text-center text-4xl font-extrabold text-primary mb-10">
+          Top Tutors
+        </h2>
 
-    <Slider topTutors={topTutors}></Slider>
-    </div>
+        {/* small accent bar */}
+        <div className="mx-auto w-24 h-1 bg-accent rounded-full mb-12"></div>
+
+        {/* slider */}
+        <Slider key={topTutors.length} topTutors={topTutors} />
+      </div>
+    </section>
   );
 };
 

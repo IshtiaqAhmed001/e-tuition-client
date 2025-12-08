@@ -9,10 +9,10 @@
   default: true;
   --color-primary: #007C63;
   --color-accent: #FFD166;
-  --color-secondary: #00A896;
+  --color-secondary: #019374;
   --color-neutral: #F2F5F3;
 }
 
 .active{
-  background-color: #00A896;
+  background-color: #019374;
 }

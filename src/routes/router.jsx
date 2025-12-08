@@ -10,6 +10,7 @@ import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Loading from "../components/Loading/Loading";
 import Home from "../pages/Home/Home/Home";
+import Profile from "../pages/Dashboard/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -19,17 +20,21 @@ export const router = createBrowserRouter([
       { index: true, Component: Home },
       {
         path: "/tuitions",
-        element: <PrivateRoute>
-          <Tuitions/>
-        </PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Tuitions />
+          </PrivateRoute>
+        ),
         hydrateFallbackElement: <Loading />,
         loader: () => fetch("/tuitionListings.json").then((res) => res.json()),
       },
       {
         path: "/tutors",
-        element: <PrivateRoute>
-          <Tutors/>
-        </PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Tutors />
+          </PrivateRoute>
+        ),
         hydrateFallbackElement: <Loading />,
         loader: () => fetch("/tutorsData.json").then((res) => res.json()),
       },
@@ -47,6 +52,16 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    Component: DashboardLayout,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        Component: Profile,
+      },
+    ],
   },
 ]);

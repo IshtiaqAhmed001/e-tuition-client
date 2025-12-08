@@ -3,25 +3,28 @@ import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 const SocialLogin = () => {
-    const {setUser,loginWithGoogle}=useAuth();
-    const axiosPublic = useAxiosPublic();
+  const { setUser, loginWithGoogle } = useAuth();
+  const axiosPublic = useAxiosPublic();
   const handleGoogleSignIn = () => {
-   
-    loginWithGoogle()
-    .then(res=>{
-        
-        setUser(res.user);
-         const newUser = {
-           name: res.user.displayName,
-           email: res.user.email,
-           photo: res.user.photoURL,
-         };
-        
-        axiosPublic.post('/users',newUser)
-        .then(res=>{
-            console.log(res.data)
-        }).catch(error=>console.log(error))
-    })
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    loginWithGoogle().then((res) => {
+      setUser(res.user);
+      const newUser = {
+        name: res.user.displayName,
+        email: res.user.email,
+        photo: res.user.photoURL,
+        role: "student",
+      };
+
+      axiosPublic
+        .post("/users", newUser)
+        .then((res) => {
+          navigate(location.state || "/");
+        })
+        .catch((error) => console.log(error));
+    });
   };
 
   return (

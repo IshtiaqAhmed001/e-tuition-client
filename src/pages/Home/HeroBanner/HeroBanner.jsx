@@ -1,11 +1,12 @@
-import React from "react";
-import { Link } from "react-router";
-import bannerImg from "../../assets/bannerImg.jpg";
-const Home = () => {
-  return (
-    <div>
+import React from 'react';
+
+import bannerImg from '../../../assets/bannerImg.jpg';
+import { Link } from 'react-router';
+
+const HeroBanner = () => {
+    return (
       <section className="bg-neutral">
-        <div className="max-w-7xl mx-auto px-5 py-20 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <div className="max-w-7xl mx-auto px-5 md:px-0 py-20 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           {/* LEFT TEXT SECTION */}
           <div>
             <h1 className="text-4xl md:text-5xl font-bold leading-tight text-primary">
@@ -44,8 +45,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-    </div>
-  );
+    );
 };
 
-export default Home;
+export default HeroBanner;

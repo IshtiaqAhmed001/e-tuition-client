@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router";
-import Home from "../pages/Home/Home";
 import RootLayout from "../layouts/RootLayout";
 import Tuitions from "../pages/Tuitions/Tuitions";
 import Tutors from "../pages/Tutors/Tutors";
@@ -10,6 +9,7 @@ import Register from "../pages/Auth/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Loading from "../components/Loading/Loading";
+import Home from "../pages/Home/Home/Home";
 
 export const router = createBrowserRouter([
   {

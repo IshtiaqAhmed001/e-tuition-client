@@ -18,7 +18,6 @@ import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
   const { role, roleLoading } = useRole();
-  console.log("role: ", role);
 
   const navLinkStyle =
     "is-drawer-close:tooltip is-drawer-close:tooltip-right tooltip-accent hover:bg-accent hover:text-primary transition-colors";

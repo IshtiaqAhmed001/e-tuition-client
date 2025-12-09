@@ -16,7 +16,7 @@ const Tuition = ({ tuition }) => {
       {/* Subject + class */}
       <p className="flex gap-2 mt-3 text-sm text-primary font-medium items-center">
         <FaBook />
-        {tuition.subject} — {tuition.class}
+        {tuition.subject} — Class {tuition.class}
       </p>
 
       {/* Location */}

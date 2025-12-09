@@ -1,9 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const PostTuition = () => {
   const { user } = useAuth();
+  const axiosPublic = useAxiosPublic();
 
   const {
     register,
@@ -12,7 +14,26 @@ const PostTuition = () => {
   } = useForm();
 
   const handlePost = (data) => {
-    console.log(data);
+    const newPost = {
+      title: data.title,
+      subject: data.subject,
+      class: data.class,
+      location: data.location,
+      salary: data.salary,
+      daysPerWeek: data.daysPerWeek,
+      schedule: data?.schedule ? data.schedule: 'evening',
+      status: 'pending',
+      postedBy: user.email,
+    };
+
+ axiosPublic.post('/tuitions',newPost)
+ .then(res=>{
+    if(res.data.insertedId){
+        console.log('New tuition posted: ',res.data)
+    }
+ }).catch(error=>{
+    console.log(error)
+ })
   };
 
   return (
@@ -50,7 +71,7 @@ const PostTuition = () => {
                   Subjects
                 </label>
                 <input
-                  {...register("subjects", { required: true })}
+                  {...register("subject", { required: true })}
                   type="text"
                   placeholder="Math, Physics"
                   className="input input-bordered w-full"

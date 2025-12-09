@@ -4,17 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const StudentProfile = () => {
+  const axiosPublic = useAxiosPublic();
+  const { user } = useAuth();
 
-const axiosPublic = useAxiosPublic();
-    const {user}=useAuth();
-
-    const {data:profile={}}=useQuery({
-        queryKey:['user'],
-        queryFn:async ()=>{
-            const res = await axiosPublic.get(`users/${user.email}`);
-            return res.data
-        }
-    })
+  const { data: profile = {} } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`users/${user.email}/id`);
+      return res.data;
+    },
+  });
   return (
     <div className="p-6">
       <div className="max-w-5xl mx-auto bg-base-200 rounded-xl shadow-md border border-base-300 p-6">

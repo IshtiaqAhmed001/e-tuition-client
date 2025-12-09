@@ -1,9 +1,18 @@
 import React from "react";
 import { useLoaderData } from "react-router";
 import Tuition from "./Tuition";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const Tuitions = () => {
-  const tuitionsData = useLoaderData() || [];
+   const axiosPublic = useAxiosPublic();
+    const {data:tuitionsData=[]} = useQuery({
+      queryKey:['tuitionsData'],
+      queryFn: async ()=>{
+        const res = await axiosPublic.get('/tuitions');
+        return res.data;
+      }
+    })
 
   return (
     <div className="max-w-7xl mx-auto py-12 space-y-10">

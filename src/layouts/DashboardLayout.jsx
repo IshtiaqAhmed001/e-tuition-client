@@ -75,22 +75,20 @@ const DashboardLayout = () => {
               </Link>
             </li>
 
-            {/* PROFILE */}
-            <li>
-              <Link
-              to='/dashboard/student-profile'
-                className={navLinkStyle}
-                // className={navLinkStyle}
-                data-tip="My Profile"
-              >
-                <FaUser className="size-4" />
-                <span className="is-drawer-close:hidden">Profile</span>
-              </Link>
-            </li>
-
             {/* STUDENT PANEL */}
             {role === "student" && (
               <>
+                <li>
+                  <Link
+                    to="/dashboard"
+                    className={navLinkStyle}
+                    // className={navLinkStyle}
+                    data-tip="My Profile"
+                  >
+                    <FaUser className="size-4" />
+                    <span className="is-drawer-close:hidden">Profile</span>
+                  </Link>
+                </li>
                 <li>
                   <Link
                     to="/dashboard/student/post-tuition"

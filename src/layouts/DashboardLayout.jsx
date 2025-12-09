@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router";
+import { Link, Outlet } from "react-router";
 import {
   FaUser,
   FaUsers,
@@ -14,21 +14,12 @@ import {
   FaUserShield,
 } from "react-icons/fa";
 import Logo from "../components/Logo/Logo";
-import useAuth from "../hooks/useAuth";
-import useAxiosPublic from "../hooks/useAxiosPublic";
-import { useQuery } from "@tanstack/react-query";
+import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
-const axiosPublic = useAxiosPublic();
-const { user } = useAuth();
+  const { role, roleLoading } = useRole();
+  console.log("role: ", role);
 
-const { data: currentUser = {} } = useQuery({
-  queryKey: ["currentUser"],
-  queryFn: async () => {
-    const res = await axiosPublic.get(`users/${user.email}`);
-    return res.data;
-  },
-});
   const navLinkStyle =
     "is-drawer-close:tooltip is-drawer-close:tooltip-right tooltip-accent hover:bg-accent hover:text-primary transition-colors";
   // const navLinkStyle =
@@ -78,121 +69,130 @@ const { data: currentUser = {} } = useQuery({
           <ul className="menu w-full grow text-primary font-medium">
             {/* HOME */}
             <li>
-              <button className={navLinkStyle} data-tip="Dashboard Home">
+              <Link className={navLinkStyle} to="/" data-tip="Dashboard Home">
                 <FaHome className="size-4" />
-                <span className="is-drawer-close:hidden">Dashboard Home</span>
-              </button>
+                <span className="is-drawer-close:hidden">Home</span>
+              </Link>
             </li>
 
             {/* PROFILE */}
             <li>
-              <button
+              <Link
+              to='/dashboard/student-profile'
                 className={navLinkStyle}
                 // className={navLinkStyle}
                 data-tip="My Profile"
               >
                 <FaUser className="size-4" />
-                <span className="is-drawer-close:hidden">My Profile</span>
-              </button>
+                <span className="is-drawer-close:hidden">Profile</span>
+              </Link>
             </li>
 
-            <li>
-              <button className={navLinkStyle} data-tip="Edit Profile">
-                <FaEdit className="size-4" />
-                <span className="is-drawer-close:hidden">Edit Profile</span>
-              </button>
-            </li>
-{
-  currentUser.role==='student' && <>
-        {/* STUDENT PANEL */}
-            <li className="mt-4 font-bold text-secondary is-drawer-close:hidden">
-              Student Panel
-            </li>
+            {/* STUDENT PANEL */}
+            {role === "student" && (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/student/post-tuition"
+                    className={navLinkStyle}
+                    data-tip="Post Tuition"
+                  >
+                    <FaPlus className="size-4" />
+                    <span className="is-drawer-close:hidden">Post Tuition</span>
+                  </Link>
+                </li>
 
-            <li>
-              <button className={navLinkStyle} data-tip="Post Tuition">
-                <FaPlus className="size-4" />
-                <span className="is-drawer-close:hidden">Post Tuition</span>
-              </button>
-            </li>
+                <li>
+                  <Link
+                    to="/dashboard/student/my-tuitions"
+                    className={navLinkStyle}
+                    data-tip="My Tuitions"
+                  >
+                    <FaList className="size-4" />
+                    <span className="is-drawer-close:hidden">My Tuitions</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/student/tutor-applications"
+                    className={navLinkStyle}
+                    data-tip="Tutor Applications"
+                  >
+                    <FaChalkboardTeacher className="size-4" />
+                    <span className="is-drawer-close:hidden">
+                      Tutor Applications
+                    </span>
+                  </Link>
+                </li>
+              </>
+            )}
 
-            <li>
-              <button className={navLinkStyle} data-tip="My Tuitions">
-                <FaList className="size-4" />
-                <span className="is-drawer-close:hidden">My Tuitions</span>
-              </button>
-            </li>
-
-            <li>
-              <button className={navLinkStyle} data-tip="Tutors">
-                <FaChalkboardTeacher className="size-4" />
-                <span className="is-drawer-close:hidden">Tutors</span>
-              </button>
-            </li>
-</>
-}
-            
-       
             {/* TUTOR PANEL */}
-            <li className="mt-4 font-bold text-secondary is-drawer-close:hidden">
-              Tutor Panel
-            </li>
+            {role === "tutor" && (
+              <>
+                <li>
+                  <button
+                    className={navLinkStyle}
+                    data-tip="Available Tuitions"
+                  >
+                    <FaBookReader className="size-4" />
+                    <span className="is-drawer-close:hidden">
+                      Available Tuitions
+                    </span>
+                  </button>
+                </li>
 
-            <li>
-              <button className={navLinkStyle} data-tip="Available Tuitions">
-                <FaBookReader className="size-4" />
-                <span className="is-drawer-close:hidden">
-                  Available Tuitions
-                </span>
-              </button>
-            </li>
+                <li>
+                  <button className={navLinkStyle} data-tip="My Accepted">
+                    <FaList className="size-4" />
+                    <span className="is-drawer-close:hidden">My Accepted</span>
+                  </button>
+                </li>
 
-            <li>
-              <button className={navLinkStyle} data-tip="My Accepted">
-                <FaList className="size-4" />
-                <span className="is-drawer-close:hidden">My Accepted</span>
-              </button>
-            </li>
-
-            <li>
-              <button className={navLinkStyle} data-tip="Earnings">
-                <FaMoneyBill className="size-4" />
-                <span className="is-drawer-close:hidden">Earnings</span>
-              </button>
-            </li>
-
+                <li>
+                  <button className={navLinkStyle} data-tip="Earnings">
+                    <FaMoneyBill className="size-4" />
+                    <span className="is-drawer-close:hidden">Earnings</span>
+                  </button>
+                </li>
+              </>
+            )}
             {/* ADMIN PANEL */}
-            <li className="mt-4 font-bold text-secondary is-drawer-close:hidden">
-              Admin Panel
-            </li>
+            {role === "admin" && (
+              <>
+                <li>
+                  <button className={navLinkStyle} data-tip="Manage Users">
+                    <FaUsers className="size-4" />
+                    <span className="is-drawer-close:hidden">Manage Users</span>
+                  </button>
+                </li>
 
-            <li>
-              <button className={navLinkStyle} data-tip="Manage Users">
-                <FaUsers className="size-4" />
-                <span className="is-drawer-close:hidden">Manage Users</span>
-              </button>
-            </li>
+                <li>
+                  <button className={navLinkStyle} data-tip="Manage Tutors">
+                    <FaChalkboardTeacher className="size-4" />
+                    <span className="is-drawer-close:hidden">
+                      Manage Tutors
+                    </span>
+                  </button>
+                </li>
 
-            <li>
-              <button className={navLinkStyle} data-tip="Manage Tutors">
-                <FaChalkboardTeacher className="size-4" />
-                <span className="is-drawer-close:hidden">Manage Tutors</span>
-              </button>
-            </li>
+                <li>
+                  <button className={navLinkStyle} data-tip="Manage Tuitions">
+                    <FaBookReader className="size-4" />
+                    <span className="is-drawer-close:hidden">
+                      Manage Tuitions
+                    </span>
+                  </button>
+                </li>
 
-            <li>
-              <button className={navLinkStyle} data-tip="Manage Tuitions">
-                <FaBookReader className="size-4" />
-                <span className="is-drawer-close:hidden">Manage Tuitions</span>
-              </button>
-            </li>
-
-            <li>
-              <button className={navLinkStyle} data-tip="Approvals">
-                <FaUserShield className="size-4" />
-                <span className="is-drawer-close:hidden">Approvals</span>
-              </button>
-            </li>
+                <li>
+                  <button className={navLinkStyle} data-tip="Approvals">
+                    <FaUserShield className="size-4" />
+                    <span className="is-drawer-close:hidden">Approvals</span>
+                  </button>
+                </li>
+              </>
+            )}
 
             {/* SETTINGS */}
             <li className="mt-4">

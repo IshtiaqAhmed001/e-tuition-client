@@ -1,5 +1,5 @@
 import React from "react";
-import StudentProfile from "./StudentProfile";
+import StudentProfile from "../StudentDashboard/StudentProfile";
 
 const Profile = () => {
   return (

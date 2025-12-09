@@ -37,6 +37,7 @@ const Register = () => {
               name: data.name,
               email: data.email,
               photo: data.photo,
+              phone:data.phone,
               role: data.role,
             };
 
@@ -44,7 +45,7 @@ const Register = () => {
               .post("/users", userInfo)
               .then((res) => {
                 console.log("user data stored to DB: ", res.data);
-                 navigate(location.state || "/");
+                navigate(location.state || "/");
               })
               .catch((error) => console.log(error));
           })
@@ -108,6 +109,21 @@ const Register = () => {
             />
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">Email is required</p>
+            )}
+          </div>
+          {/* Email */}
+          <div className="form-control w-full mb-4">
+            <label className="label">
+              <span className="label-text font-medium">Phone</span>
+            </label>
+            <input
+              {...register("phone", { required: true })}
+              type="tel"
+              placeholder="+880 **** *** *** "
+              className="input input-bordered w-full"
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">Phone number is required</p>
             )}
           </div>
 

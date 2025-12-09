@@ -11,6 +11,9 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Loading from "../components/Loading/Loading";
 import Home from "../pages/Home/Home/Home";
 import Profile from "../pages/Dashboard/Profile/Profile";
+import PostTuition from "../pages/Dashboard/StudentDashboard/PostTuition";
+import MyTuitions from "../pages/Dashboard/StudentDashboard/MyTuitions";
+import TutorApplications from "../pages/Dashboard/StudentDashboard/TutorApplications";
 
 export const router = createBrowserRouter([
   {
@@ -62,6 +65,9 @@ export const router = createBrowserRouter([
         index: true,
         Component: Profile,
       },
+      { path: "student/post-tuition", Component: PostTuition },
+      { path: "student/my-tuitions", Component: MyTuitions },
+      { path: "student/tutor-applications", Component: TutorApplications },
     ],
   },
 ]);

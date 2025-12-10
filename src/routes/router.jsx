@@ -14,6 +14,7 @@ import PostTuition from "../pages/Dashboard/StudentDashboard/PostTuition";
 import MyTuitions from "../pages/Dashboard/StudentDashboard/MyTuitions";
 import TutorApplications from "../pages/Dashboard/StudentDashboard/TutorApplications";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+import TuitionDetails from "../pages/Tuitions/TuitionDetails";
 
 export const router = createBrowserRouter([
   {
@@ -27,9 +28,15 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <Tuitions />
           </PrivateRoute>
-        ),
-        hydrateFallbackElement: <Loading />,
-        loader: () => fetch("/tuitionListings.json").then((res) => res.json()),
+        )
+      },
+      {
+        path: "/tuitions/:id",
+        element: (
+          <PrivateRoute>
+            <TuitionDetails />
+          </PrivateRoute>
+        )
       },
       {
         path: "/tutors",

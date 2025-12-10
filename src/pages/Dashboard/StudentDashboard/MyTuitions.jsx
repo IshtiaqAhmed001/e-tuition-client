@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FaLocationDot } from "react-icons/fa6";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAuth from "../../../hooks/useAuth";
+import { Link } from "react-router";
 
 const MyTuitions = () => {
   const axiosPublic = useAxiosPublic();
@@ -67,7 +68,7 @@ const MyTuitions = () => {
 
                 <td>{tuition.postedDate}</td>
                 <td className="flex gap-1">
-                  <button className="btn btn-xs btn-primary">View</button>
+                  <Link to={`/tuitions/${tuition._id}/details`} className="btn btn-xs btn-primary">View</Link>
                   <button className="btn btn-xs btn-accent">Edit</button>
                   <button className="btn btn-xs btn-error ">Delete</button>
                 </td>

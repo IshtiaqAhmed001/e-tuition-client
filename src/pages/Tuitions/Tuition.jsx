@@ -1,6 +1,7 @@
 import React from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaBook } from "react-icons/fa";
+import { Link } from "react-router";
 
 const Tuition = ({ tuition }) => {
   return (
@@ -50,9 +51,9 @@ const Tuition = ({ tuition }) => {
           {tuition.status}
         </span>
 
-        <button className="btn btn-sm bg-primary border-none hover:bg-secondary text-neutral">
+        <Link to={`/tuitions/${tuition._id}/details`} className="btn btn-sm bg-primary border-none hover:bg-secondary text-neutral">
           Details
-        </button>
+        </Link>
       </div>
     </div>
   );

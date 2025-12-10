@@ -1,28 +1,47 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useParams } from "react-router";
 import { FaLocationDot, FaUser, FaClock } from "react-icons/fa6";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAuth from "../../hooks/useAuth";
+import useRole from "../../hooks/useRole";
 
 const TuitionDetails = () => {
+    const {user}=useAuth();
+    const {role}=useRole();
   const { id } = useParams();
+  const axiosPublic =useAxiosPublic();
+  const applyModalRef = useRef();
+   
+  const {data:tuition ={}} = useQuery({
+    queryKey:['tuition'],
+    queryFn: async()=>{
+const res = await axiosPublic.get(`/tuitions/${id}/details`);
+return res.data
+    }
+  })
 
-  // temporary dummy object until backend connected
-  const tuition = {
-    _id: id,
-    title: "Need ICT Tutor",
-    subject: "ICT",
-    class: "10",
-    location: "Bashundhara, Dhaka",
-    salary: "5000",
-    daysPerWeek: "4",
-    schedule: "Evening",
-    status: "Pending",
-    postedBy: "john.cena@gmail.com",
-    postedDate: "2025-12-09",
-  };
-
-  const handleApply = () => {
-    console.log("Tutor applied!");
-  };
+ const {
+     register,
+     handleSubmit,
+     reset,
+     formState: { errors },
+   } = useForm();
+ 
+   const handleApply = (data) => {
+     const application = {
+       ...data,
+       id,
+       status: "pending",
+       appliedDate: new Date(),
+     };
+ 
+     console.log("Application Data:", application);
+ 
+     // submit API here
+     reset();
+     applyModalRef.current.close();
+   };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">
@@ -98,16 +117,111 @@ const TuitionDetails = () => {
           </div>
         </div>
 
-        {/* button */}
-        <div className="mt-10 text-center">
-          <button
-            onClick={handleApply}
-            className="btn btn-primary px-10 text-neutral hover:bg-secondary"
-          >
-            Apply Now
-          </button>
-        </div>
+        {/*Apply button */}
+        {role === "tutor" && (
+          <div className="mt-10 text-center">
+            <button
+              onClick={() => applyModalRef.current.showModal()}
+              className="btn btn-primary px-10 text-neutral hover:bg-secondary"
+            >
+              Apply Now
+            </button>
+          </div>
+        )}
       </div>
+
+      {/* apply modal  */}
+      <>
+        <dialog ref={applyModalRef} className="modal">
+          <div className="modal-box bg-neutral text-primary border border-accent/30">
+            <h3 className="font-bold text-2xl mb-6 text-primary">
+              Apply for Tuition
+            </h3>
+
+            <form onSubmit={handleSubmit(handleApply)} className="space-y-4">
+              {/* Name */}
+              <div>
+                <label className="label text-secondary font-medium">Name</label>
+                <input
+                  value={user?.displayName}
+                  readOnly
+                  className="input input-bordered w-full bg-base-200"
+                />
+              </div>
+
+              {/* Email */}
+              <div>
+                <label className="label text-secondary font-medium">
+                  Email
+                </label>
+                <input
+                  value={user?.email}
+                  readOnly
+                  className="input input-bordered w-full bg-base-200"
+                />
+              </div>
+
+              {/* Qualification */}
+              <div>
+                <label className="label text-secondary font-medium">
+                  Qualifications
+                </label>
+                <input
+                  {...register("qualification", { required: true })}
+                  placeholder="Honors, BSc etc."
+                  className="input input-bordered w-full"
+                />
+                {errors.qualification && (
+                  <p className="text-red-500 text-sm">Required</p>
+                )}
+              </div>
+
+              {/* Experience */}
+              <div>
+                <label className="label text-secondary font-medium">
+                  Experience (years)
+                </label>
+                <input
+                  {...register("experience", { required: true })}
+                  type="number"
+                  className="input input-bordered w-full"
+                />
+                {errors.experience && (
+                  <p className="text-red-500 text-sm">Required</p>
+                )}
+              </div>
+
+              {/* Expected Salary */}
+              <div>
+                <label className="label text-secondary font-medium">
+                  Expected Salary
+                </label>
+                <input
+                  {...register("expectedSalary", { required: true })}
+                  type="number"
+                  placeholder="5000"
+                  className="input input-bordered w-full"
+                />
+              </div>
+
+              {/* buttons */}
+              <div className="modal-action">
+                <button type="submit" className="btn btn-primary">
+                  Submit
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => applyModalRef.current.close()}
+                  className="btn btn-secondary"
+                >
+                  Close
+                </button>
+              </div>
+            </form>
+          </div>
+        </dialog>
+      </>
     </div>
   );
 };

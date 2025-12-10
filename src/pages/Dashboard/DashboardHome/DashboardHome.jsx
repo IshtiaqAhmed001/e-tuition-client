@@ -2,6 +2,7 @@ import React from 'react';
 import useRole from '../../../hooks/useRole';
 import Loading from '../../../components/Loading/Loading';
 import StudentProfile from '../StudentDashboard/StudentProfile';
+import TutorProfile from '../TutorDashboard/TutorProfile';
 
 const DashboardHome = () => {
     const {role,roleLoading}=useRole();
@@ -12,6 +13,9 @@ const DashboardHome = () => {
    if (role === "student") {
      return <StudentProfile/>
    } 
+   else if(role==="tutor"){
+    return <TutorProfile/>
+   }
 
   
 };

@@ -10,7 +10,7 @@ const StudentProfile = () => {
   const { data: profile = {} } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const res = await axiosPublic.get(`users/${user.email}/id`);
+      const res = await axiosPublic.get(`users/${user.email}/profile`);
       return res.data;
     },
   });

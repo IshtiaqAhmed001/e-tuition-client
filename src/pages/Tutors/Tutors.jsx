@@ -4,15 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Tutors = () => {
-  const axiosPublic =useAxiosPublic();
-const {data:tutors = []} = useQuery({
-    queryKey:['tutors'],
-    queryFn: async ()=>{
-const result = await axiosPublic.get('/tutors')
-return result.data;
-    }
-})
-  
+  const axiosPublic = useAxiosPublic();
+  const { data: tutors = [] } = useQuery({
+    queryKey: ["tutors"],
+    queryFn: async () => {
+      const result = await axiosPublic.get("/users/tutors");
+      return result.data;
+    },
+  });
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">
@@ -41,7 +40,7 @@ return result.data;
                       <div className="mask mask-squircle h-12 w-12">
                         <img
                           src={
-                            tutor.image ||
+                            tutor.photo ||
                             "https://img.daisyui.com/images/profile/demo/2@94.webp"
                           }
                           alt={tutor.name}
@@ -53,17 +52,17 @@ return result.data;
                       <p className="font-semibold text-primary">{tutor.name}</p>
                       <span className="text-xs flex items-center gap-1 text-gray-600">
                         <FaLocationDot />
-                        {tutor.location}
+                        {tutor?.profile?.location}
                       </span>
                     </div>
                   </div>
                 </td>
 
                 <td className="font-medium text-secondary">
-                  {tutor.teachingSubject.join(", ")}
+                  {tutor?.profile?.teachingSubject?.join(", ")}
                 </td>
 
-                <td>{tutor.experience} years</td>
+                <td>{tutor?.profile?.experience} years</td>
 
                 <td className="flex gap-2 justify-end">
                   <button className="btn btn-xs bg-secondary text-neutral border-none hover:bg-primary">

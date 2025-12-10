@@ -8,7 +8,7 @@ const TopTutors = () => {
   const { data: topTutors = [] } = useQuery({
     queryKey: ["topTutors"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/topTutors");
+      const res = await axiosPublic.get("/users/topTutors");
       return res.data;
     },
   });

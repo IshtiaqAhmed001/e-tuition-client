@@ -20,14 +20,16 @@ export default function Slider({ topTutors }) {
         <div key={i} className="keen-slider__slide p-4">
           <div className="bg-neutral p-5 rounded-xl shadow text-center">
             <img
-              src={tutor.image}
+              src={tutor?.photo}
               className="w-28 h-28 mx-auto rounded-full object-cover border-4 border-primary"
             />
             <h2 className="font-bold text-primary mt-3">{tutor.name}</h2>
             <p className="text-secondary text-sm">
-              Experience: {tutor.experience}
+              Experience: {tutor?.profile?.experience}
             </p>
-            <p className="text-secondary">{tutor.teachingSubject.join(", ")}</p>
+            <p className="text-secondary">
+              {tutor?.profile?.teachingSubject?.join(", ")}
+            </p>
           </div>
         </div>
       ))}

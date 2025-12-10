@@ -10,13 +10,16 @@ const TutorProfile = () => {
 
   const { register, handleSubmit, reset } = useForm();
 
-
-  const { data: tutor = {},refetch, isLoading } = useQuery({
-    queryKey: ["tutorProfile"],
+  const {
+    data: tutor = {},
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["editTutor"],
     queryFn: async () => {
       const res = await axiosPublic.get(`/users/${user.email}/profile`);
       return res.data;
-    }
+    },
   });
 
   const onSubmit = async (data) => {
@@ -31,16 +34,15 @@ const TutorProfile = () => {
       location: data.location,
     };
 
-    axiosPublic.patch(`/users/${user.email}/profile`,profileInfo)
-    .then(res=>{
-        if(res.data.modifiedCount){
-            refetch();
-            reset()
-            alert('Profile updated and marked as complete!')
+    axiosPublic
+      .patch(`/users/${user.email}/profile`, profileInfo)
+      .then((res) => {
+        if (res.data.modifiedCount) {
+          refetch();
+          reset();
+          alert("Profile updated and marked as complete!");
         }
-    })
-    
-    
+      });
   };
 
   if (loading || isLoading) return <Loading />;

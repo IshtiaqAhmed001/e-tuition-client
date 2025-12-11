@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAuth from "../../hooks/useAuth";
 import useRole from "../../hooks/useRole";
+import { useForm } from "react-hook-form";
 
 const TuitionDetails = () => {
     const {user}=useAuth();

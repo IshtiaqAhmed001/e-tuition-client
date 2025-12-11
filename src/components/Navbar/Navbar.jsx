@@ -76,7 +76,7 @@ const Navbar = () => {
                 {links}
               </ul>
             </div>
-            <Link>
+           <Link to='/'>
               <Logo />
             </Link>
           </div>

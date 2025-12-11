@@ -2,13 +2,15 @@ import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useLocation, useNavigate } from "react-router";
 const SocialLogin = () => {
   const { setUser, loginWithGoogle } = useAuth();
   const axiosPublic = useAxiosPublic();
-  const handleGoogleSignIn = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
+  const handleGoogleSignIn = () => {
+  
     loginWithGoogle().then((res) => {
       setUser(res.user);
       const newUser = {

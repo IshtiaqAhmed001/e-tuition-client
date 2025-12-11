@@ -15,6 +15,9 @@ import MyTuitions from "../pages/Dashboard/StudentDashboard/MyTuitions";
 import TutorApplications from "../pages/Dashboard/StudentDashboard/TutorApplications";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import TuitionDetails from "../pages/Tuitions/TuitionDetails";
+import ManageUsers from "../pages/Dashboard/AdminDashboard/ManageUsers";
+import ManageTuitions from "../pages/Dashboard/AdminDashboard/ManageTuitions";
+import ManageTutors from "../pages/Dashboard/AdminDashboard/ManageTutors";
 
 export const router = createBrowserRouter([
   {
@@ -28,7 +31,7 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <Tuitions />
           </PrivateRoute>
-        )
+        ),
       },
       {
         path: "/tuitions/:id/details",
@@ -36,7 +39,7 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <TuitionDetails />
           </PrivateRoute>
-        )
+        ),
       },
       {
         path: "/tutors",
@@ -75,6 +78,9 @@ export const router = createBrowserRouter([
       { path: "student/post-tuition", Component: PostTuition },
       { path: "student/my-tuitions", Component: MyTuitions },
       { path: "student/tutor-applications", Component: TutorApplications },
+      { path: "admin/manage-users", Component: ManageUsers },
+      { path: "admin/manage-tuitions", Component: ManageTuitions },
+      { path: "admin/manage-tutors", Component: ManageTutors },
     ],
   },
 ]);

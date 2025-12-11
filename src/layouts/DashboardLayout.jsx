@@ -158,28 +158,40 @@ const DashboardLayout = () => {
             {role === "admin" && (
               <>
                 <li>
-                  <button className={navLinkStyle} data-tip="Manage Users">
+                  <Link
+                    to="admin/manage-users"
+                    className={navLinkStyle}
+                    data-tip="Manage Users"
+                  >
                     <FaUsers className="size-4" />
                     <span className="is-drawer-close:hidden">Manage Users</span>
-                  </button>
+                  </Link>
                 </li>
 
                 <li>
-                  <button className={navLinkStyle} data-tip="Manage Tutors">
+                  <Link
+                    to="admin/manage-tutors"
+                    className={navLinkStyle}
+                    data-tip="Manage Tutors"
+                  >
                     <FaChalkboardTeacher className="size-4" />
                     <span className="is-drawer-close:hidden">
                       Manage Tutors
                     </span>
-                  </button>
+                  </Link>
                 </li>
 
                 <li>
-                  <button className={navLinkStyle} data-tip="Manage Tuitions">
+                  <Link
+                    to="admin/manage-tuitions"
+                    className={navLinkStyle}
+                    data-tip="Manage Tuitions"
+                  >
                     <FaBookReader className="size-4" />
                     <span className="is-drawer-close:hidden">
                       Manage Tuitions
                     </span>
-                  </button>
+                  </Link>
                 </li>
 
                 <li>

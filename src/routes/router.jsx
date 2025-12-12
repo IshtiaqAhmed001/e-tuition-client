@@ -18,6 +18,9 @@ import TuitionDetails from "../pages/Tuitions/TuitionDetails";
 import ManageUsers from "../pages/Dashboard/AdminDashboard/ManageUsers";
 import ManageTuitions from "../pages/Dashboard/AdminDashboard/ManageTuitions";
 import ManageTutors from "../pages/Dashboard/AdminDashboard/ManageTutors";
+import Unauthorized from "../components/UnAuthorized/UnAuthorized";
+import StudentRoute from "./StudentRoute";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -75,12 +78,58 @@ export const router = createBrowserRouter([
         index: true,
         Component: DashboardHome,
       },
-      { path: "student/post-tuition", Component: PostTuition },
-      { path: "student/my-tuitions", Component: MyTuitions },
-      { path: "student/tutor-applications", Component: TutorApplications },
-      { path: "admin/manage-users", Component: ManageUsers },
-      { path: "admin/manage-tuitions", Component: ManageTuitions },
-      { path: "admin/manage-tutors", Component: ManageTutors },
+      {
+        path: "student/post-tuition",
+        element: (
+          <StudentRoute>
+            <PostTuition />
+          </StudentRoute>
+        ),
+      },
+      {
+        path: "student/my-tuitions",
+        element: (
+          <StudentRoute>
+            <MyTuitions />
+          </StudentRoute>
+        ),
+      },
+      {
+        path: "student/tutor-applications",
+        element: (
+          <StudentRoute>
+            <TutorApplications />
+          </StudentRoute>
+        ),
+      },
+      {
+        path: "admin/manage-users",
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/manage-tuitions",
+        element: (
+          <AdminRoute>
+            <ManageTuitions />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/manage-tutors",
+        element: (
+          <AdminRoute>
+            <ManageTutors />
+          </AdminRoute>
+        ),
+      },
     ],
+  },
+  {
+    path: "/unauthorized",
+    Component: Unauthorized,
   },
 ]);

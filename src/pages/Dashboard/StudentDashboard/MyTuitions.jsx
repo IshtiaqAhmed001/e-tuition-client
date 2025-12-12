@@ -1,18 +1,18 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaLocationDot } from "react-icons/fa6";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAuth from "../../../hooks/useAuth";
 import { Link } from "react-router";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyTuitions = () => {
-  const axiosPublic = useAxiosPublic();
+const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
   const { data: myTuitions = [] } = useQuery({
     queryKey: ["myTuitions", user?.email],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/tuitions?email=${user?.email}`);
+      const res = await axiosSecure.get(`/tuitions?email=${user?.email}`);
       return res.data;
     },
   });

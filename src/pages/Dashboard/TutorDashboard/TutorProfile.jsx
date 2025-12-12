@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Loading from "../../../components/Loading/Loading";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const TutorProfile = () => {
   const { user, loading } = useAuth();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   const { register, handleSubmit, reset } = useForm();
 
@@ -17,7 +17,7 @@ const TutorProfile = () => {
   } = useQuery({
     queryKey: ["editTutor"],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/users/${user.email}/profile`);
+      const res = await axiosSecure.get(`/users/${user.email}/profile`);
       return res.data;
     },
   });

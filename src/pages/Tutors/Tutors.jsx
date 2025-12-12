@@ -2,13 +2,15 @@ import React from "react";
 import { FaEnvelope, FaUserTie, FaLocationDot } from "react-icons/fa6";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Tutors = () => {
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { data: tutors = [] } = useQuery({
     queryKey: ["tutors"],
     queryFn: async () => {
-      const result = await axiosPublic.get("/users/tutors");
+      const result = await axiosSecure.get("/users/tutors");
       return result.data;
     },
   });

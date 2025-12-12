@@ -1,22 +1,22 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaUserEdit, FaTrashAlt, FaEye } from "react-icons/fa";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ManageUsers = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   const { data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const result = await axiosPublic.get("/users");
+      const result = await axiosSecure.get("/users");
       return result.data;
     },
   });
 
   const handleRoleChange = async (userId, newRole) => {
     try {
-    const res =  await axiosPublic.patch(`/users/${userId}/role`, {role:newRole});
+    const res =  await axiosSecure.patch(`/users/${userId}/role`, {role:newRole});
     if(res.data.modifiedCount){
  alert(`Role updated to ${newRole}`);
     }

@@ -2,22 +2,22 @@ import React, { useRef } from "react";
 import { useParams } from "react-router";
 import { FaLocationDot, FaUser, FaClock } from "react-icons/fa6";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAuth from "../../hooks/useAuth";
 import useRole from "../../hooks/useRole";
 import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const TuitionDetails = () => {
     const {user}=useAuth();
     const {role}=useRole();
   const { id } = useParams();
-  const axiosPublic =useAxiosPublic();
+const axiosSecure = useAxiosSecure();
   const applyModalRef = useRef();
    
   const {data:tuition ={}} = useQuery({
     queryKey:['tuition'],
     queryFn: async()=>{
-const res = await axiosPublic.get(`/tuitions/${id}/details`);
+const res = await axiosSecure.get(`/tuitions/${id}/details`);
 return res.data
     }
   })

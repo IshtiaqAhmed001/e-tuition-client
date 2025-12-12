@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Slider from "../../../components/Slider/Slider";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 
 const TopTutors = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { data: topTutors = [] } = useQuery({
     queryKey: ["topTutors"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/users/topTutors");
+      const res = await axiosSecure.get("/users/topTutors");
       return res.data;
     },
   });

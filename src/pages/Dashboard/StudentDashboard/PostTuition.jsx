@@ -1,12 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const PostTuition = () => {
   const { user } = useAuth();
-  const axiosPublic = useAxiosPublic();
-
+const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -26,7 +25,7 @@ const PostTuition = () => {
       postedBy: user.email,
     };
 
- axiosPublic.post('/tuitions',newPost)
+ axiosSecure.post('/tuitions',newPost)
  .then(res=>{
     if(res.data.insertedId){
         console.log('New tuition posted: ',res.data)

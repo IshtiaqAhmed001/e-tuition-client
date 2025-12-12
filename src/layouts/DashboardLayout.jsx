@@ -170,19 +170,6 @@ const DashboardLayout = () => {
 
                 <li>
                   <Link
-                    to="admin/manage-tutors"
-                    className={navLinkStyle}
-                    data-tip="Manage Tutors"
-                  >
-                    <FaChalkboardTeacher className="size-4" />
-                    <span className="is-drawer-close:hidden">
-                      Manage Tutors
-                    </span>
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
                     to="admin/manage-tuitions"
                     className={navLinkStyle}
                     data-tip="Manage Tuitions"

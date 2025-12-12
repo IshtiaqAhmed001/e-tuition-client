@@ -7,7 +7,7 @@ const StudentProfile = () => {
 const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
-  const { data: profile = {} } = useQuery({
+  const { data: profile = {},refetch } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
       const res = await axiosSecure.get(`users/${user.email}/profile`);

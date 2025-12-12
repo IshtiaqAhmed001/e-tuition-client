@@ -6,7 +6,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: users = [] } = useQuery({
+  const { data: users = [], refetch: refetchUsers } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const result = await axiosSecure.get("/users");
@@ -16,17 +16,33 @@ const ManageUsers = () => {
 
   const handleRoleChange = async (userId, newRole) => {
     try {
-    const res =  await axiosSecure.patch(`/users/${userId}/role`, {role:newRole});
-    if(res.data.modifiedCount){
- alert(`Role updated to ${newRole}`);
-    }
-     
+      const res = await axiosSecure.patch(`/admin/users/${userId}/role`, {
+        role: newRole,
+      });
+      if (res.data.modifiedCount) {
+        alert(`Role updated to ${newRole}`);
+        refetchUsers();
+      }
     } catch (error) {
       console.error(error);
       alert("Failed to update role");
     }
   };
+  const handleStatusChange = async (userId, newStatus) => {
+    try {
+      const res = await axiosSecure.patch(`/admin/users/${userId}/status`, {
+        approvalStatus: newStatus,
+      });
 
+      if (res.data.modifiedCount) {
+        alert(`Status updated to ${newStatus}`);
+        refetchUsers();
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Failed to update status");
+    }
+  };
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">
       <h1 className="text-3xl font-bold text-primary mb-6">Manage Users</h1>
@@ -84,17 +100,24 @@ const ManageUsers = () => {
 
                 {/* Approval Status */}
                 <td>
-                  <span
-                    className={`badge ${
-                      user?.profile?.approvalStatus === "approved"
-                        ? "badge-success"
-                        : user?.profile?.approvalStatus === "pending"
-                        ? "badge-warning"
-                        : "badge-error"
-                    }`}
+                  <select
+                    disabled={user.role === "admin"}
+                    className={`
+      select select-bordered select-xs bg-base-100
+      ${
+        user?.profile?.approvalStatus === "approved"
+          ? "border-primary text-primary"
+          : "border-accent text-accent"
+      }
+    `}
+                    defaultValue={user?.profile?.approvalStatus || "pending"}
+                    onChange={(e) =>
+                      handleStatusChange(user._id, e.target.value)
+                    }
                   >
-                    {user?.profile?.approvalStatus || "unknown"}
-                  </span>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                  </select>
                 </td>
 
                 <td>{user?.profile?.joinDate}</td>

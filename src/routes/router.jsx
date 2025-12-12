@@ -17,7 +17,6 @@ import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import TuitionDetails from "../pages/Tuitions/TuitionDetails";
 import ManageUsers from "../pages/Dashboard/AdminDashboard/ManageUsers";
 import ManageTuitions from "../pages/Dashboard/AdminDashboard/ManageTuitions";
-import ManageTutors from "../pages/Dashboard/AdminDashboard/ManageTutors";
 import Unauthorized from "../components/UnAuthorized/UnAuthorized";
 import StudentRoute from "./StudentRoute";
 import AdminRoute from "./AdminRoute";
@@ -118,14 +117,7 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-      {
-        path: "admin/manage-tutors",
-        element: (
-          <AdminRoute>
-            <ManageTutors />
-          </AdminRoute>
-        ),
-      },
+      
     ],
   },
   {

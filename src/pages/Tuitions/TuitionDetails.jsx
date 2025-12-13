@@ -29,19 +29,25 @@ return res.data
      formState: { errors },
    } = useForm();
  
-   const handleApply = (data) => {
-     const application = {
+   const handleApply = async (data) => {
+     const newApplication = {
        ...data,
-       id,
-       status: "pending",
+       tuitionId:id,
        appliedDate: new Date(),
      };
  
-     console.log("Application Data:", application);
- 
-     // submit API here
-     reset();
-     applyModalRef.current.close();
+     console.log("Application Data:", newApplication);
+  try {
+    const res = await axiosSecure.post("/applications", newApplication);
+
+    if (res.data?.insertedId) {
+      alert(`New application has been submitted!`);
+      reset();
+      applyModalRef.current.close();
+    }
+  } catch (error) {
+    console.error(error);
+  }
    };
 
   return (

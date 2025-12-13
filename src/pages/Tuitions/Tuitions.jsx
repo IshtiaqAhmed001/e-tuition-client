@@ -1,13 +1,13 @@
 import React from "react";
 import Tuition from "./Tuition";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Tuitions = () => {
-const axiosSecure = useAxiosSecure();    const {data:tuitionsData=[]} = useQuery({
+const axiosPublic = useAxiosPublic();    const {data:tuitionsData=[]} = useQuery({
       queryKey:['tuitionsData'],
       queryFn: async ()=>{
-        const res = await axiosSecure.get('/tuitions');
+        const res = await axiosPublic.get('/tuitions');
         return res.data;
       }
     })

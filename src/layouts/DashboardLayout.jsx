@@ -15,6 +15,7 @@ import {
 } from "react-icons/fa";
 import Logo from "../components/Logo/Logo";
 import useRole from "../hooks/useRole";
+import Loading from "../components/Loading/Loading";
 
 const DashboardLayout = () => {
   const { role, roleLoading } = useRole();
@@ -23,6 +24,10 @@ const DashboardLayout = () => {
     "is-drawer-close:tooltip is-drawer-close:tooltip-right tooltip-accent hover:bg-accent hover:text-primary transition-colors";
   // const navLinkStyle =
   //   "is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-primary/10 hover:text-primary transition-colors";
+
+  if(roleLoading){
+    return <Loading/>
+  }
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -53,7 +58,9 @@ const DashboardLayout = () => {
           </label>
 
           <div className="px-4 font-semibold text-neutral">
-            <Logo />
+            <Link to='/'>
+              <Logo />
+            </Link>
           </div>
         </nav>
 
@@ -128,29 +135,29 @@ const DashboardLayout = () => {
             {role === "tutor" && (
               <>
                 <li>
-                  <button
+                  <Link
+                    to="/dashboard/tutor/ongoing-tuitions"
                     className={navLinkStyle}
-                    data-tip="Available Tuitions"
+                    data-tip="Ongoing Tuitions"
                   >
                     <FaBookReader className="size-4" />
                     <span className="is-drawer-close:hidden">
-                      Available Tuitions
+                      My Ongoing Tuitions
                     </span>
-                  </button>
+                  </Link>
                 </li>
 
                 <li>
-                  <button className={navLinkStyle} data-tip="My Accepted">
-                    <FaList className="size-4" />
-                    <span className="is-drawer-close:hidden">My Accepted</span>
-                  </button>
-                </li>
-
-                <li>
-                  <button className={navLinkStyle} data-tip="Earnings">
+                  <Link
+                    to="/dashboard/tutor/revenue-history"
+                    className={navLinkStyle}
+                    data-tip="Revenue History"
+                  >
                     <FaMoneyBill className="size-4" />
-                    <span className="is-drawer-close:hidden">Earnings</span>
-                  </button>
+                    <span className="is-drawer-close:hidden">
+                      Revenue History
+                    </span>
+                  </Link>
                 </li>
               </>
             )}

@@ -20,6 +20,9 @@ import ManageTuitions from "../pages/Dashboard/AdminDashboard/ManageTuitions";
 import Unauthorized from "../components/UnAuthorized/UnAuthorized";
 import StudentRoute from "./StudentRoute";
 import AdminRoute from "./AdminRoute";
+import TutorRoute from "./TutorRoute";
+import OngoingTuitions from "../pages/Dashboard/TutorDashboard/OngoingTuitions";
+import RevenueHistory from "../pages/Dashboard/TutorDashboard/RevenueHistory";
 
 export const router = createBrowserRouter([
   {
@@ -29,11 +32,7 @@ export const router = createBrowserRouter([
       { index: true, Component: Home },
       {
         path: "/tuitions",
-        element: (
-          <PrivateRoute>
-            <Tuitions />
-          </PrivateRoute>
-        ),
+        Component: Tuitions,
       },
       {
         path: "/tuitions/:id/details",
@@ -102,6 +101,22 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "tutor/ongoing-tuitions",
+        element: (
+          <TutorRoute>
+            <OngoingTuitions />
+          </TutorRoute>
+        ),
+      },
+      {
+        path: "tutor/revenue-history",
+        element: (
+          <TutorRoute>
+            <RevenueHistory />
+          </TutorRoute>
+        ),
+      },
+      {
         path: "admin/manage-users",
         element: (
           <AdminRoute>
@@ -117,7 +132,6 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-      
     ],
   },
   {

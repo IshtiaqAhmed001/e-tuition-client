@@ -5,10 +5,10 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const StudentProfile = () => {
 const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
+  const { user,loading } = useAuth();
 
-  const { data: profile = {},refetch } = useQuery({
-    queryKey: ["user"],
+  const { data: profile = {} } = useQuery({
+    queryKey: ["user", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`users/${user.email}/profile`);
       return res.data;

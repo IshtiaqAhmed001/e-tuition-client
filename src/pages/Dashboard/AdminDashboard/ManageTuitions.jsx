@@ -8,7 +8,7 @@ const ManageTuitions = () => {
   const { data: tuitions = [], refetch } = useQuery({
     queryKey: ["tuitions"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/tuitions?admin=true");
+      const res = await axiosSecure.get("/admin/tuitions");
       return res.data;
     },
   });

@@ -15,7 +15,7 @@ const TutorProfile = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["editTutor"],
+    queryKey: ["editTutor", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/${user.email}/profile`);
       return res.data;

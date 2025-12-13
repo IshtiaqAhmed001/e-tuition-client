@@ -22,7 +22,8 @@ const axiosSecure = useAxiosSecure();
       daysPerWeek: data.daysPerWeek,
       schedule: data?.schedule ? data.schedule: 'evening',
       status: 'pending',
-      postedBy: user.email,
+      gender:data.gender,
+      additionalNotes:data.notes,
     };
 
  axiosSecure.post('/tuitions',newPost)
@@ -166,6 +167,27 @@ const axiosSecure = useAxiosSecure();
                   className="input input-bordered w-full"
                 />
               </div>
+              {/* gender */}
+              <div>
+                <label className="label text-primary font-medium">Gender Preference</label>
+                <input
+                  {...register("gender", { required: true })}
+                  type="text"
+                  placeholder="Male or Female"
+                  className="input input-bordered w-full"
+                />
+              </div>
+              {/* Schedule */}
+              <div>
+                <label className="label text-primary font-medium">Timing Schedule</label>
+                <input
+                  {...register("schedule", { required: true })}
+                  type="text"
+                  placeholder="Morning | Afternoon | Evening"
+                  className="input input-bordered w-full"
+                />
+              </div>
+            
 
               {/* Notes */}
               <div>

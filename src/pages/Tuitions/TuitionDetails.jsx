@@ -18,7 +18,7 @@ const axiosSecure = useAxiosSecure();
     queryKey:['tuition'],
     queryFn: async()=>{
 const res = await axiosSecure.get(`/tuitions/${id}/details`);
-return res.data
+return res.data;
     }
   })
 
@@ -46,7 +46,7 @@ return res.data
       applyModalRef.current.close();
     }
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
   }
    };
 

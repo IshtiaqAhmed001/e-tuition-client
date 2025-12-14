@@ -1,33 +1,45 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { FaEnvelope, FaUserTie } from "react-icons/fa6";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const TutorApplications = () => {
-  const applications = [
-    {
-      tutorName: "Mahmud Hasan",
-      tutorImage: "",
-      subject: "Mathematics",
-      experience: 3,
-      appliedDate: "2025-12-02",
-      status: "Pending",
-    },
-    {
-      tutorName: "Sara Rahman",
-      tutorImage: "",
-      subject: "English",
-      experience: 2,
-      appliedDate: "2025-12-03",
-      status: "Approved",
-    },
-    {
-      tutorName: "Ahmed Chowdhury",
-      tutorImage: "",
-      subject: "Physics",
-      experience: 4,
-      appliedDate: "2025-12-01",
-      status: "Pending",
-    },
-  ];
+  // const applications = [
+  //   {
+  //     tutorName: "Mahmud Hasan",
+  //     tutorImage: "",
+  //     subject: "Mathematics",
+  //     experience: 3,
+  //     appliedDate: "2025-12-02",
+  //     status: "Pending",
+  //   },
+  //   {
+  //     tutorName: "Sara Rahman",
+  //     tutorImage: "",
+  //     subject: "English",
+  //     experience: 2,
+  //     appliedDate: "2025-12-03",
+  //     status: "Approved",
+  //   },
+  //   {
+  //     tutorName: "Ahmed Chowdhury",
+  //     tutorImage: "",
+  //     subject: "Physics",
+  //     experience: 4,
+  //     appliedDate: "2025-12-01",
+  //     status: "Pending",
+  //   },
+  // ];
+
+  const axiosSecure = useAxiosSecure();
+
+  const {data:applications=[]}=useQuery({
+    queryKey:['my-applications'],
+    queryFn:async ()=>{
+    const res = await axiosSecure.get("/applications");
+    return res.data;
+    }
+  })
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">
@@ -42,6 +54,7 @@ const TutorApplications = () => {
               <th>#</th>
               <th>Tutor</th>
               <th>Experience</th>
+              <th>Applied For</th>
               <th>Applied Date</th>
               <th>Status</th>
               <th className="text-center">Actions</th>
@@ -71,16 +84,15 @@ const TutorApplications = () => {
                       <p className="font-semibold text-primary">
                         {app.tutorName}
                       </p>
-                      <span className="text-xs flex items-center gap-1 text-gray-600">
-                        <FaUserTie /> {app.subject}
-                      </span>
+                
                     </div>
                   </div>
                 </td>
 
                 <td>{app.experience} yrs</td>
+                <td>{app.tuitionTitle}</td>
 
-                <td>{app.appliedDate}</td>
+                <td>{new Date(app.appliedDate).toLocaleString()}</td>
 
                 <td
                   className={`font-medium ${
@@ -91,16 +103,13 @@ const TutorApplications = () => {
                 </td>
 
                 <td className="flex gap-2 justify-end">
-                  <button className="btn btn-xs bg-secondary text-neutral border-none hover:bg-primary">
-                    <FaEnvelope /> Message
-                  </button>
-
+                
                   <button className="btn btn-xs bg-accent border-none hover:bg-secondary">
                     Approve
                   </button>
 
-                  <button className="btn btn-xs btn-primary hover:bg-secondary border-none">
-                    Profile
+                  <button className="btn btn-xs btn-error hover:bg-secondary border-none">
+                    Reject
                   </button>
                 </td>
               </tr>

@@ -2,44 +2,45 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { FaEnvelope, FaUserTie } from "react-icons/fa6";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
 
 const TutorApplications = () => {
-  // const applications = [
-  //   {
-  //     tutorName: "Mahmud Hasan",
-  //     tutorImage: "",
-  //     subject: "Mathematics",
-  //     experience: 3,
-  //     appliedDate: "2025-12-02",
-  //     status: "Pending",
-  //   },
-  //   {
-  //     tutorName: "Sara Rahman",
-  //     tutorImage: "",
-  //     subject: "English",
-  //     experience: 2,
-  //     appliedDate: "2025-12-03",
-  //     status: "Approved",
-  //   },
-  //   {
-  //     tutorName: "Ahmed Chowdhury",
-  //     tutorImage: "",
-  //     subject: "Physics",
-  //     experience: 4,
-  //     appliedDate: "2025-12-01",
-  //     status: "Pending",
-  //   },
-  // ];
 
   const axiosSecure = useAxiosSecure();
+const {user}=useAuth();
 
-  const {data:applications=[]}=useQuery({
-    queryKey:['my-applications'],
-    queryFn:async ()=>{
-    const res = await axiosSecure.get("/applications");
-    return res.data;
+  const { data: applications = [], refetch } = useQuery({
+    queryKey: ["my-applications"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/applications");
+      return res.data;
+    },
+  });
+
+  const handleUpdateStatus = async (applicationId, status) => {
+    const res = await axiosSecure.patch(`/applications/${applicationId}`, {
+      status,
+    });
+
+    if (res.data.modifiedCount) {
+      refetch();
+      alert(`Application status updated to ${status}`);
     }
-  })
+  };
+
+  const handlePayment= async(application)=>{
+ const paymentInfo = {
+   applicationId: application?._id,
+   tuitionId: application?.tuitionId,
+   tuitionTitle: application?.tuitionTitle,
+   studentId: application?.studentId,
+   tutorId: application?.tutorId,
+   cost: application?.expectedSalary,
+   email: user?.email,
+ };
+const res = await axiosSecure.post("/payment-checkout-session", paymentInfo);
+window.location.assign(res.data.url);
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">
@@ -56,14 +57,14 @@ const TutorApplications = () => {
               <th>Experience</th>
               <th>Applied For</th>
               <th>Applied Date</th>
-              <th>Status</th>
+              <th>Payment Status</th>
               <th className="text-center">Actions</th>
             </tr>
           </thead>
 
           <tbody>
             {applications.map((app, idx) => (
-              <tr key={idx} className="hover:bg-accent/20">
+              <tr key={idx} className="hover:bg-accent/20 ">
                 <td className="font-medium">{idx + 1}</td>
 
                 <td>
@@ -84,7 +85,6 @@ const TutorApplications = () => {
                       <p className="font-semibold text-primary">
                         {app.tutorName}
                       </p>
-                
                     </div>
                   </div>
                 </td>
@@ -94,23 +94,47 @@ const TutorApplications = () => {
 
                 <td>{new Date(app.appliedDate).toLocaleString()}</td>
 
-                <td
-                  className={`font-medium ${
-                    app.status === "Pending" ? "text-secondary" : "text-primary"
-                  }`}
-                >
-                  {app.status}
+                <td className="text-center">
+                  <button
+                    className={`font-medium ${
+                      app.paymentStatus === "unpaid" ||
+                      app.paymentStatus === "pending"
+                        ? "btn btn-xs btn-accent"
+                        : app?.paymentStatus === "paid"
+                        ? "btn btn-xs btn-primary"
+                        : "btn btn-xs btn-error"
+                    }`}
+                  >
+                    {app.paymentStatus.toUpperCase()}
+                  </button>
                 </td>
 
-                <td className="flex gap-2 justify-end">
-                
-                  <button className="btn btn-xs bg-accent border-none hover:bg-secondary">
-                    Approve
-                  </button>
+                <td className="text-right align-middle">
+                  <div className="flex gap-2 justify-end items-center">
+                    <button
+                      disabled={app.paymentStatus === "paid"}
+                      onClick={() => handlePayment(app)}
+                      className={`btn btn-xs border-none ${
+                        app.paymentStatus === "paid"
+                          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                          : "bg-accent hover:bg-secondary"
+                      }`}
+                    >
+                      Pay
+                    </button>
 
-                  <button className="btn btn-xs btn-error hover:bg-secondary border-none">
-                    Reject
-                  </button>
+                    <button
+                      disabled={app.paymentStatus === "rejected"}
+                      onClick={() => handleUpdateStatus(app._id, "rejected")}
+                      className={`btn btn-xs border-none ${
+                        app.paymentStatus === "rejected"
+                          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                          : "btn-error hover:bg-secondary"
+                      }`}
+                    >
+                      Reject
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

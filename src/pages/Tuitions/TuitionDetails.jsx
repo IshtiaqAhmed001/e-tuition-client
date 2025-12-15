@@ -145,7 +145,7 @@ return res.data;
               Apply for Tuition
             </h3>
 
-            <form onSubmit={handleSubmit(handleApply)} className="space-y-4">
+            <form onSubmit={()=>handleSubmit(handleApply)} className="space-y-4">
               {/* Name */}
               <div>
                 <label className="label text-secondary font-medium">Name</label>
@@ -192,6 +192,7 @@ return res.data;
                   {...register("experience", { required: true })}
                   type="number"
                   className="input input-bordered w-full"
+                  placeholder="Enter experience in years"
                 />
                 {errors.experience && (
                   <p className="text-red-500 text-sm">Required</p>
@@ -206,7 +207,7 @@ return res.data;
                 <input
                   {...register("expectedSalary", { required: true })}
                   type="number"
-                  placeholder="5000"
+                  placeholder="Enter Amount in BDT"
                   className="input input-bordered w-full"
                 />
               </div>

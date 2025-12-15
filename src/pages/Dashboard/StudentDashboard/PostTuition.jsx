@@ -110,7 +110,7 @@ const axiosSecure = useAxiosSecure();
                 <input
                   {...register("salary", { required: true })}
                   type="text"
-                  placeholder="8,000 - 12,000"
+                  placeholder="Enter amount here"
                   className="input input-bordered w-full"
                 />
               </div>

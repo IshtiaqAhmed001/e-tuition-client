@@ -23,6 +23,8 @@ import AdminRoute from "./AdminRoute";
 import TutorRoute from "./TutorRoute";
 import OngoingTuitions from "../pages/Dashboard/TutorDashboard/OngoingTuitions";
 import RevenueHistory from "../pages/Dashboard/TutorDashboard/RevenueHistory";
+import PaymentSuccess from "../pages/Dashboard/StudentDashboard/Payment/PaymentSuccess";
+import PaymentCancelled from "../pages/Dashboard/StudentDashboard/Payment/PaymentCancelled";
 
 export const router = createBrowserRouter([
   {
@@ -97,6 +99,23 @@ export const router = createBrowserRouter([
         element: (
           <StudentRoute>
             <TutorApplications />
+          </StudentRoute>
+        ),
+      },
+     
+      {
+        path: "student/payment-success",
+        element: (
+          <StudentRoute>
+            <PaymentSuccess />
+          </StudentRoute>
+        ),
+      },
+      {
+        path: "student/payment-cancelled",
+        element: (
+          <StudentRoute>
+            <PaymentCancelled />
           </StudentRoute>
         ),
       },

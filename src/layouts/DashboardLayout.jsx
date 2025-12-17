@@ -58,7 +58,7 @@ const DashboardLayout = () => {
           </label>
 
           <div className="px-4 font-semibold text-neutral">
-            <Link to='/'>
+            <Link to="/">
               <Logo />
             </Link>
           </div>
@@ -125,6 +125,18 @@ const DashboardLayout = () => {
                     <FaChalkboardTeacher className="size-4" />
                     <span className="is-drawer-close:hidden">
                       Tutor Applications
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/student/payment-history"
+                    className={navLinkStyle}
+                    data-tip="Payment History"
+                  >
+                    <FaMoneyBill className="size-4" />
+                    <span className="is-drawer-close:hidden">
+                      Payment History
                     </span>
                   </Link>
                 </li>

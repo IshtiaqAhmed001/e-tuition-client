@@ -57,6 +57,7 @@ window.location.assign(res.data.url);
               <th>Experience</th>
               <th>Applied For</th>
               <th>Applied Date</th>
+              <th>Application Status</th>
               <th>Payment Status</th>
               <th className="text-center">Actions</th>
             </tr>
@@ -97,6 +98,19 @@ window.location.assign(res.data.url);
                 <td className="text-center">
                   <button
                     className={`font-medium ${
+                      app.status === "pending"
+                        ? "text-accent"
+                        : app?.status === "accepted"
+                        ? "text-primary"
+                        : "text-error"
+                    }`}
+                  >
+                    {app.status.toUpperCase()}
+                  </button>
+                </td>
+                <td className="text-center ">
+                  <button
+                    className={`font-medium cursor-not-allowed ${
                       app.paymentStatus === "unpaid" ||
                       app.paymentStatus === "pending"
                         ? "btn btn-xs btn-accent"

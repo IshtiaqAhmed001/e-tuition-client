@@ -29,7 +29,8 @@ const OngoingTuitions = () => {
               <th>#</th>
               <th>Tuition Title</th>
               <th>Applied Date</th>
-              <th>Status</th>
+              <th>Application Status</th>
+              <th>Payment Status</th>
               <th className="text-center">Actions</th>
             </tr>
           </thead>
@@ -42,6 +43,8 @@ const OngoingTuitions = () => {
                 pending: "text-accent",
                 paid: "text-primary",
                 rejected: "text-error",
+                unpaid: "text-error",
+                accepted: "text-primary",
               };
 
               return (
@@ -54,8 +57,11 @@ const OngoingTuitions = () => {
 
                   <td>{new Date(app.appliedDate).toLocaleString()}</td>
 
-                  <td className={`font-medium ${statusColor[status]}`}>
-                    {status}
+                  <td className={`font-medium ${app.status==='pending'?'text-green-600':app.status==='accepted'?'text-primary':'text-error'}`}>
+                    {app.status}
+                  </td>
+                  <td className={`font-medium ${app.paymentStatus==='paid'?'text-primary':'text-error'}`}>
+                    {app.paymentStatus}
                   </td>
 
                   <td className="text-right align-middle">

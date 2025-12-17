@@ -145,7 +145,7 @@ return res.data;
               Apply for Tuition
             </h3>
 
-            <form onSubmit={()=>handleSubmit(handleApply)} className="space-y-4">
+            <form onSubmit={handleSubmit(handleApply)} className="space-y-4">
               {/* Name */}
               <div>
                 <label className="label text-secondary font-medium">Name</label>

@@ -3,6 +3,7 @@ import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../components/Loading/Loading";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const TutorProfile = () => {
   const { user, loading } = useAuth();
@@ -20,6 +21,7 @@ const TutorProfile = () => {
       const res = await axiosSecure.get(`/users/${user.email}/profile`);
       return res.data;
     },
+    enabled: !!user?.email,
   });
 
   const onSubmit = async (data) => {
@@ -34,18 +36,25 @@ const TutorProfile = () => {
       location: data.location,
     };
 
-    axiosPublic
-      .patch(`/users/${user.email}/profile`, profileInfo)
-      .then((res) => {
-        if (res.data.modifiedCount) {
-          refetch();
-          reset();
-          alert("Profile updated and marked as complete!");
-        }
-      });
-  };
+    const res = await axiosSecure.patch(
+      `/users/${user.email}/profile`,
+      profileInfo
+    );
 
-  if (loading || isLoading) return <Loading />;
+    if (res.data.modifiedCount) {
+      refetch();
+      reset();
+      Swal.fire({
+        icon: "success",
+        title: "Profile Updated",
+        text: "Your profile has been updated successfully",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    }
+  };
+  
+  if (loading || isLoading || !tutor?.email) return <Loading />;
 
   return (
     <div className="p-6 max-w-2xl mx-auto bg-base-200 rounded-xl my-10">
@@ -53,7 +62,6 @@ const TutorProfile = () => {
         Tutor Profile
       </h2>
 
-      {/* Profile Picture */}
       <div className="flex flex-col items-center mb-6">
         <img
           src={tutor.photo}
@@ -63,25 +71,21 @@ const TutorProfile = () => {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* readonly locked fields */}
         <input
-          {...register("name")}
           disabled
           defaultValue={tutor.name}
           className="input input-bordered w-full bg-base-300"
         />
 
         <input
-          {...register("email")}
           disabled
           defaultValue={tutor.email}
           className="input input-bordered w-full bg-base-300"
         />
 
-        {/* editable fields */}
         <input
           {...register("phone")}
-          defaultValue={tutor.phone}
+          defaultValue={tutor.profile.phone}
           placeholder="Phone"
           className="input input-bordered w-full"
         />
@@ -95,7 +99,7 @@ const TutorProfile = () => {
 
         <select
           {...register("gender", { required: true })}
-          defaultValue={tutor.gender}
+          defaultValue={tutor.profile.gender}
           className="select select-bordered w-full"
         >
           <option value="">Gender</option>
@@ -106,7 +110,7 @@ const TutorProfile = () => {
 
         <input
           {...register("qualification", { required: true })}
-          defaultValue={tutor.qualification}
+          defaultValue={tutor.profile.qualification}
           placeholder="Qualification"
           className="input input-bordered w-full"
         />
@@ -114,14 +118,14 @@ const TutorProfile = () => {
         <input
           {...register("experience", { required: true })}
           type="number"
-          defaultValue={tutor.experience}
+          defaultValue={tutor.profile.experience}
           placeholder="Experience"
           className="input input-bordered w-full"
         />
 
         <input
           {...register("teachingSubject", { required: true })}
-          defaultValue={tutor.teachingSubject?.join(", ")}
+          defaultValue={tutor.profile.teachingSubject?.join(", ")}
           placeholder="Subjects: Math, Physics"
           className="input input-bordered w-full"
         />
@@ -129,14 +133,14 @@ const TutorProfile = () => {
         <input
           type="number"
           {...register("expectedSalary", { required: true })}
-          defaultValue={tutor.expectedSalary}
+          defaultValue={tutor.profile.expectedSalary}
           placeholder="Expected Salary"
           className="input input-bordered w-full"
         />
 
         <input
           {...register("location", { required: true })}
-          defaultValue={tutor.location}
+          defaultValue={tutor.profile.location}
           placeholder="Location"
           className="input input-bordered w-full"
         />

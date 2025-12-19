@@ -1,23 +1,51 @@
 import React from "react";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const StudentProfile = () => {
-const axiosSecure = useAxiosSecure();
-  const { user,loading } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
 
-  const { data: profile = {} } = useQuery({
+  const { register, handleSubmit } = useForm();
+
+  const { data: profile = {}, refetch } = useQuery({
     queryKey: ["user", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`users/${user.email}/profile`);
       return res.data;
     },
   });
+
+  const handleUpdateProfile = async (data) => {
+    const updatedProfile = {
+      photo: data.photo,
+      phone: data.phone,
+      location: data.location,
+    };
+
+    const res = await axiosSecure.patch(
+      `/users/${user.email}/profile`,
+      updatedProfile
+    );
+
+    if (res.data.modifiedCount) {
+      refetch();
+      Swal.fire({
+        icon: "success",
+        title: "Profile Updated",
+        text: "Your profile has been updated successfully",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    }
+  };
+
   return (
     <div className="p-6">
       <div className="max-w-5xl mx-auto bg-base-200 rounded-xl shadow-md border border-base-300 p-6">
-        {/* Profile Header */}
         <div className="flex items-center gap-6">
           <div className="avatar">
             <div className="w-28 rounded-full ring ring-primary ring-offset-base-200 ring-offset-2">
@@ -32,12 +60,12 @@ const axiosSecure = useAxiosSecure();
           </div>
         </div>
 
-        {/* Divider */}
         <div className="divider my-6"></div>
 
-        {/* Form */}
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* LEFT COLUMN */}
+        <form
+          onSubmit={handleSubmit(handleUpdateProfile)}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
           <div className="space-y-4">
             <div>
               <label className="label text-primary font-medium">
@@ -46,7 +74,8 @@ const axiosSecure = useAxiosSecure();
               <input
                 type="text"
                 defaultValue={profile.name}
-                className="input input-bordered w-full bg-base-100"
+                disabled
+                className="input input-bordered w-full bg-base-300"
               />
             </div>
 
@@ -56,7 +85,7 @@ const axiosSecure = useAxiosSecure();
                 type="email"
                 defaultValue={profile.email}
                 disabled
-                className="input input-bordered w-full bg-base-100"
+                className="input input-bordered w-full bg-base-300"
               />
             </div>
 
@@ -66,7 +95,7 @@ const axiosSecure = useAxiosSecure();
                 type="text"
                 defaultValue={profile.role}
                 disabled
-                className="input input-bordered w-full bg-base-100"
+                className="input input-bordered w-full bg-base-300"
               />
             </div>
 
@@ -76,30 +105,20 @@ const axiosSecure = useAxiosSecure();
               </label>
               <input
                 type="text"
+                {...register("photo")}
                 defaultValue={profile.photo}
                 className="input input-bordered w-full bg-base-100"
               />
             </div>
           </div>
 
-          {/* RIGHT COLUMN */}
           <div className="space-y-4">
             <div>
               <label className="label text-primary font-medium">Phone</label>
               <input
                 type="text"
-                placeholder="Optional"
-                className="input input-bordered w-full bg-base-100"
-              />
-            </div>
-
-            <div>
-              <label className="label text-primary font-medium">
-                Current Class
-              </label>
-              <input
-                type="text"
-                placeholder="Class 9 / HSC / University"
+                {...register("phone")}
+                defaultValue={profile.phone}
                 className="input input-bordered w-full bg-base-100"
               />
             </div>
@@ -108,29 +127,19 @@ const axiosSecure = useAxiosSecure();
               <label className="label text-primary font-medium">Location</label>
               <input
                 type="text"
-                placeholder="City / Area"
+                {...register("location")}
+                defaultValue={profile.profile?.location}
                 className="input input-bordered w-full bg-base-100"
               />
             </div>
           </div>
+
+          <div className="md:col-span-2 text-end mt-6">
+            <button type="submit" className="btn btn-primary px-10">
+              Save Profile
+            </button>
+          </div>
         </form>
-
-        {/* BIO */}
-        <div className="mt-6">
-          <label className="label text-primary font-medium">
-            About Student
-          </label>
-          <textarea
-            rows={4}
-            className="textarea textarea-bordered w-full bg-base-100"
-            placeholder="Tell tutors something about you"
-          />
-        </div>
-
-        {/* SUBMIT */}
-        <div className="text-end mt-6">
-          <button className="btn btn-primary px-10">Save Profile</button>
-        </div>
       </div>
     </div>
   );

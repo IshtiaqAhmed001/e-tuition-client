@@ -2,6 +2,8 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaUserEdit, FaTrashAlt, FaEye } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -15,34 +17,92 @@ const ManageUsers = () => {
   });
 
   const handleRoleChange = async (userId, newRole) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: `Change user role to "${newRole}"?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#16a34a",
+      cancelButtonColor: "#dc2626",
+      confirmButtonText: "Yes, change role",
+    });
+
+    if (!result.isConfirmed) return;
+
     try {
       const res = await axiosSecure.patch(`/admin/users/${userId}/role`, {
         role: newRole,
       });
-      if (res.data.modifiedCount) {
-        alert(`Role updated to ${newRole}`);
-        refetchUsers();
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Failed to update role");
-    }
-  };
-  const handleStatusChange = async (userId, newStatus) => {
-    try {
-      const res = await axiosSecure.patch(`/admin/users/${userId}/status`, {
-        approvalStatus: newStatus,
-      });
 
       if (res.data.modifiedCount) {
-        alert(`Status updated to ${newStatus}`);
+        Swal.fire({
+          icon: "success",
+          title: "Role Updated",
+          text: `User role changed to ${newRole}`,
+          timer: 1500,
+          showConfirmButton: false,
+        });
         refetchUsers();
       }
     } catch (error) {
-      console.error(error);
-      alert("Failed to update status");
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: "Failed to update role",
+      });
     }
   };
+
+  const handleDeleteUser = async (userId) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This user will be permanently deleted!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc2626",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Yes, delete user",
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      const res = await axiosSecure.delete(`/admin/users/${userId}`);
+
+      if (res.data.deletedCount) {
+        Swal.fire({
+          icon: "success",
+          title: "Deleted",
+          text: "User has been deleted successfully",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        refetchUsers();
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: "Failed to delete user",
+      });
+    }
+  };
+
+  // const handleStatusChange = async (userId, newStatus) => {
+  //   try {
+  //     const res = await axiosSecure.patch(`/admin/users/${userId}/status`, {
+  //       approvalStatus: newStatus,
+  //     });
+
+  //     if (res.data.modifiedCount) {
+  //       alert(`Status updated to ${newStatus}`);
+  //       refetchUsers();
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     alert("Failed to update status");
+  //   }
+  // };
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">
       <h1 className="text-3xl font-bold text-primary mb-6">Manage Users</h1>
@@ -55,7 +115,7 @@ const ManageUsers = () => {
               <th>User</th>
               <th>Email</th>
               <th>Role</th>
-              <th>Status</th>
+              {/* <th>Status</th> */}
               <th>Joined</th>
               <th className="text-right">Actions</th>
             </tr>
@@ -99,7 +159,7 @@ const ManageUsers = () => {
                 </td>
 
                 {/* Approval Status */}
-                <td>
+                {/* <td>
                   <select
                     disabled={user.role === "admin"}
                     className={`
@@ -118,20 +178,22 @@ const ManageUsers = () => {
                     <option value="pending">Pending</option>
                     <option value="approved">Approved</option>
                   </select>
-                </td>
+                </td> */}
 
                 <td>{user?.profile?.joinDate}</td>
 
                 <td className="flex gap-2 justify-end">
-                  <button className="btn btn-xs bg-secondary text-neutral border-none hover:bg-primary">
-                    <FaEye /> View
-                  </button>
+                  <Link
+                    to={`/dashboard/admin/users/${user._id}`}
+                    className="btn btn-xs bg-secondary text-neutral border-none hover:bg-primary"
+                  >
+                    <FaEye /> Profile Actions
+                  </Link>
 
-                  <button className="btn btn-xs btn-primary hover:bg-secondary border-none">
-                    <FaUserEdit /> Edit
-                  </button>
-
-                  <button className="btn btn-xs bg-red-600 text-neutral hover:bg-red-500 border-none">
+                  <button
+                    onClick={() => handleDeleteUser(user._id)}
+                    className="btn btn-xs bg-red-600 text-neutral hover:bg-red-500 border-none"
+                  >
                     <FaTrashAlt /> Delete
                   </button>
                 </td>

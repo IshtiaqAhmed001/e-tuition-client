@@ -1,7 +1,8 @@
+
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const axiosSecure = axios.create({
   baseURL: "http://localhost:5000",
@@ -12,39 +13,32 @@ const useAxiosSecure = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // intercept request
     const requestInterceptor = axiosSecure.interceptors.request.use(
-      (config) => {
-        config.headers.Authorization = `Bearer ${user?.accessToken}`;
+      async (config) => {
+        // 🔑 WAIT until token exists
+        if (user?.accessToken) {
+          config.headers.authorization = `Bearer ${user.accessToken}`;
+        }
         return config;
       }
     );
 
-    // intercept response
     const responseInterceptor = axiosSecure.interceptors.response.use(
-      (response) => {
-        return response;
-      },
-      (error) => {
-        const statusCode = error.status;
-        if (statusCode === 401 || statusCode === 403) {
-          return <Navigate to="/unauthorized"></Navigate>;
+      (response) => response,
+      async (error) => {
+        if (error.response?.status === 401 || error.response?.status === 403) {
+          await logoutUser();
+          navigate("/login");
         }
-        // if (statusCode === 401 || statusCode === 403) {
-        //   logoutUser().then(() => {
-        //     navigate("/");
-        //   });
-        // }
-
         return Promise.reject(error);
       }
     );
 
     return () => {
-      axios.interceptors.request.eject(requestInterceptor);
-      axios.interceptors.response.eject(responseInterceptor);
+      axiosSecure.interceptors.request.eject(requestInterceptor);
+      axiosSecure.interceptors.response.eject(responseInterceptor);
     };
-  }, [user, logoutUser, navigate]);
+  }, [user?.accessToken, logoutUser, navigate]);
 
   return axiosSecure;
 };

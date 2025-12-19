@@ -26,6 +26,10 @@ import RevenueHistory from "../pages/Dashboard/TutorDashboard/RevenueHistory";
 import PaymentSuccess from "../pages/Dashboard/StudentDashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../pages/Dashboard/StudentDashboard/Payment/PaymentCancelled";
 import PaymentHistory from "../pages/Dashboard/StudentDashboard/Payment/PaymentHistory";
+import AllPayments from "../pages/Dashboard/AdminDashboard/AllPayments";
+import UpdateOtherUser from "../pages/Dashboard/AdminDashboard/UpdateOtherUser";
+import StudentProfile from "../pages/Dashboard/StudentDashboard/StudentProfile";
+import TutorProfile from "../pages/Dashboard/TutorDashboard/TutorProfile";
 
 export const router = createBrowserRouter([
   {
@@ -88,6 +92,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "student/profile",
+        element: (
+          <StudentRoute>
+            <StudentProfile />
+          </StudentRoute>
+        ),
+      },
+      {
         path: "student/my-tuitions",
         element: (
           <StudentRoute>
@@ -111,7 +123,7 @@ export const router = createBrowserRouter([
           </StudentRoute>
         ),
       },
-     
+
       {
         path: "student/payment-success",
         element: (
@@ -126,6 +138,14 @@ export const router = createBrowserRouter([
           <StudentRoute>
             <PaymentCancelled />
           </StudentRoute>
+        ),
+      },
+      {
+        path: "tutor/profile",
+        element: (
+          <TutorRoute>
+       <TutorProfile/>
+          </TutorRoute>
         ),
       },
       {
@@ -157,6 +177,22 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageTuitions />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/all-payments",
+        element: (
+          <AdminRoute>
+            <AllPayments />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/users/:id",
+        element: (
+          <AdminRoute>
+            <UpdateOtherUser />
           </AdminRoute>
         ),
       },

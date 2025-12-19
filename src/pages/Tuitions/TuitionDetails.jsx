@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import useRole from "../../hooks/useRole";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const TuitionDetails = () => {
     const {user}=useAuth();
@@ -36,12 +37,16 @@ return res.data;
        appliedDate: new Date(),
      };
  
-     console.log("Application Data:", newApplication);
   try {
     const res = await axiosSecure.post("/applications", newApplication);
 
     if (res.data?.insertedId) {
-      alert(`New application has been submitted!`);
+     Swal.fire({
+       icon: "success",
+       title: "Application Submitted!",
+       text: "Your application has been sent successfully.",
+       confirmButtonColor: "#007C63", // matches your primary color
+     });
       reset();
       applyModalRef.current.close();
     }

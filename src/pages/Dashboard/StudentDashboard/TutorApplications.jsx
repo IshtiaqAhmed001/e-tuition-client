@@ -18,9 +18,12 @@ const {user}=useAuth();
   });
 
   const handleUpdateStatus = async (applicationId, status) => {
-    const res = await axiosSecure.patch(`/applications/${applicationId}`, {
-      status,
-    });
+    const res = await axiosSecure.patch(
+      `/applications/${applicationId}/update-status`,
+      {
+        status,
+      }
+    );
 
     if (res.data.modifiedCount) {
       refetch();
@@ -69,25 +72,9 @@ window.location.assign(res.data.url);
                 <td className="font-medium">{idx + 1}</td>
 
                 <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img
-                          src={
-                            app.tutorImage ||
-                            "https://img.daisyui.com/images/profile/demo/2@94.webp"
-                          }
-                          alt={app.tutorName}
-                        />
-                      </div>
-                    </div>
-
-                    <div>
                       <p className="font-semibold text-primary">
                         {app.tutorName}
                       </p>
-                    </div>
-                  </div>
                 </td>
 
                 <td>{app.experience} yrs</td>

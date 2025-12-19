@@ -1,11 +1,9 @@
 import React from "react";
 import { FaEnvelope, FaUserTie, FaLocationDot } from "react-icons/fa6";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Tutors = () => {
-  const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const { data: tutors = [] } = useQuery({
     queryKey: ["tutors"],
@@ -66,15 +64,8 @@ const Tutors = () => {
 
                 <td>{tutor?.profile?.experience} years</td>
 
-                <td className="flex gap-2 justify-end">
-                  <button className="btn btn-xs bg-secondary text-neutral border-none hover:bg-primary">
-                    <FaEnvelope /> Message
-                  </button>
-
-                  <button className="btn btn-xs bg-accent border-none hover:bg-secondary">
-                    Hire
-                  </button>
-
+                <td className="flex justify-end">
+                 
                   <button className="btn btn-xs btn-primary hover:bg-secondary border-none">
                     Profile
                   </button>

@@ -2,8 +2,8 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import SocialLogin from "../../../components/SocialLogin/SocialLogin";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Register = () => {
   const {
@@ -17,7 +17,7 @@ const Register = () => {
 
   const { registerUser, updateUser, setUser, setLoading } = useAuth();
 
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   const handleRegister = (data) => {
     // update user profile to firebase
@@ -41,10 +41,9 @@ const Register = () => {
               role: data.role,
             };
 
-            axiosPublic
+            axiosSecure
               .post("/users", userInfo)
               .then((res) => {
-                console.log("user data stored to DB: ", res.data);
                 navigate(location.state || "/");
               })
               .catch((error) => console.log(error));

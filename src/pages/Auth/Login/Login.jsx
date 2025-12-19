@@ -19,7 +19,7 @@ const Login = () => {
   const handleLogin = (data) => {
    loginUser(data.email,data.password)
    .then(data=>{
-    setUser(data.user);
+    // setUser(data.user);
     navigate(location.state || "/")
    })
    .catch(error=>{

@@ -86,7 +86,7 @@ const DashboardLayout = () => {
               <>
                 <li>
                   <Link
-                    to="/dashboard"
+                    to="/dashboard/student/profile"
                     className={navLinkStyle}
                     // className={navLinkStyle}
                     data-tip="My Profile"
@@ -148,6 +148,16 @@ const DashboardLayout = () => {
               <>
                 <li>
                   <Link
+                    to="/dashboard/tutor/profile"
+                    className={navLinkStyle}
+                    data-tip="My Profile"
+                  >
+                    <FaUser className="size-4" />
+                    <span className="is-drawer-close:hidden">Profile</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     to="/dashboard/tutor/ongoing-tuitions"
                     className={navLinkStyle}
                     data-tip="Ongoing Tuitions"
@@ -178,7 +188,7 @@ const DashboardLayout = () => {
               <>
                 <li>
                   <Link
-                    to="admin/manage-users"
+                    to="/dashboard/admin/manage-users"
                     className={navLinkStyle}
                     data-tip="Manage Users"
                   >
@@ -189,7 +199,7 @@ const DashboardLayout = () => {
 
                 <li>
                   <Link
-                    to="admin/manage-tuitions"
+                    to="/dashboard/admin/manage-tuitions"
                     className={navLinkStyle}
                     data-tip="Manage Tuitions"
                   >
@@ -201,21 +211,17 @@ const DashboardLayout = () => {
                 </li>
 
                 <li>
-                  <button className={navLinkStyle} data-tip="Approvals">
-                    <FaUserShield className="size-4" />
-                    <span className="is-drawer-close:hidden">Approvals</span>
-                  </button>
+                  <Link to="/dashboard/admin/all-payments">
+                    <button className={navLinkStyle} data-tip="All Payments">
+                      <FaMoneyBill className="size-4" />
+                      <span className="is-drawer-close:hidden">
+                        All Payments
+                      </span>
+                    </button>
+                  </Link>
                 </li>
               </>
             )}
-
-            {/* SETTINGS */}
-            <li className="mt-4">
-              <button className={navLinkStyle} data-tip="Settings">
-                <FaCog className="size-4" />
-                <span className="is-drawer-close:hidden">Settings</span>
-              </button>
-            </li>
           </ul>
         </div>
       </div>

@@ -2,15 +2,18 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const PostTuition = () => {
   const { user } = useAuth();
-const axiosSecure = useAxiosSecure();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const axiosSecure = useAxiosSecure();
+
+const {
+  register,
+  handleSubmit,
+  reset,
+  formState: { errors },
+} = useForm();
 
   const handlePost = (data) => {
     const newPost = {
@@ -20,20 +23,33 @@ const axiosSecure = useAxiosSecure();
       location: data.location,
       salary: data.salary,
       daysPerWeek: data.daysPerWeek,
-      schedule: data?.schedule ? data.schedule: 'evening',
-      status: 'pending',
-      gender:data.gender,
-      additionalNotes:data.notes,
+      schedule: data?.schedule ? data.schedule : "evening",
+      status: "pending",
+      gender: data.gender,
+      additionalNotes: data.notes,
     };
 
- axiosSecure.post('/tuitions',newPost)
- .then(res=>{
-    if(res.data.insertedId){
-        console.log('New tuition posted: ',res.data)
-    }
- }).catch(error=>{
-    console.log(error)
- })
+    axiosSecure
+      .post("/tuitions", newPost)
+      .then((res) => {
+        if (res.data.insertedId) {
+          Swal.fire({
+            icon: "success",
+            title: "Tuition Posted!",
+            text: "Your tuition has been posted successfully.",
+            confirmButtonColor: "#007C63",
+          });
+          reset();
+        }
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Failed to Post Tuition",
+          text: error.message || "Something went wrong!",
+          confirmButtonColor: "#FFD166",
+        });
+      });
   };
 
   return (
@@ -44,15 +60,13 @@ const axiosSecure = useAxiosSecure();
         </h2>
 
         <form onSubmit={handleSubmit(handlePost)}>
-          {/* GRID wrapper */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {/* LEFT SIDE – Tuition details */}
+            {/* LEFT SIDE */}
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-primary mb-3">
                 Tuition Details
               </h3>
 
-              {/* Title */}
               <div>
                 <label className="label text-primary font-medium">
                   Tuition Title
@@ -65,7 +79,6 @@ const axiosSecure = useAxiosSecure();
                 />
               </div>
 
-              {/* Subjects */}
               <div>
                 <label className="label text-primary font-medium">
                   Subjects
@@ -78,7 +91,6 @@ const axiosSecure = useAxiosSecure();
                 />
               </div>
 
-              {/* Class */}
               <div>
                 <label className="label text-primary font-medium">Class</label>
                 <input
@@ -89,7 +101,6 @@ const axiosSecure = useAxiosSecure();
                 />
               </div>
 
-              {/* Days */}
               <div>
                 <label className="label text-primary font-medium">
                   Days Per Week
@@ -102,7 +113,6 @@ const axiosSecure = useAxiosSecure();
                 />
               </div>
 
-              {/* Salary */}
               <div>
                 <label className="label text-primary font-medium">
                   Salary Range
@@ -115,7 +125,6 @@ const axiosSecure = useAxiosSecure();
                 />
               </div>
 
-              {/* Location */}
               <div>
                 <label className="label text-primary font-medium">
                   Location
@@ -129,13 +138,12 @@ const axiosSecure = useAxiosSecure();
               </div>
             </div>
 
-            {/* Personal info */}
+            {/* RIGHT SIDE */}
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-primary mb-3">
                 Your Information
               </h3>
 
-              {/* Name */}
               <div>
                 <label className="label text-primary font-medium">Name</label>
                 <input
@@ -146,7 +154,6 @@ const axiosSecure = useAxiosSecure();
                 />
               </div>
 
-              {/* Email */}
               <div>
                 <label className="label text-primary font-medium">Email</label>
                 <input
@@ -157,7 +164,6 @@ const axiosSecure = useAxiosSecure();
                 />
               </div>
 
-              {/* Phone */}
               <div>
                 <label className="label text-primary font-medium">Phone</label>
                 <input
@@ -167,9 +173,11 @@ const axiosSecure = useAxiosSecure();
                   className="input input-bordered w-full"
                 />
               </div>
-              {/* gender */}
+
               <div>
-                <label className="label text-primary font-medium">Gender Preference</label>
+                <label className="label text-primary font-medium">
+                  Gender Preference
+                </label>
                 <input
                   {...register("gender", { required: true })}
                   type="text"
@@ -177,9 +185,11 @@ const axiosSecure = useAxiosSecure();
                   className="input input-bordered w-full"
                 />
               </div>
-              {/* Schedule */}
+
               <div>
-                <label className="label text-primary font-medium">Timing Schedule</label>
+                <label className="label text-primary font-medium">
+                  Timing Schedule
+                </label>
                 <input
                   {...register("schedule", { required: true })}
                   type="text"
@@ -187,9 +197,7 @@ const axiosSecure = useAxiosSecure();
                   className="input input-bordered w-full"
                 />
               </div>
-            
 
-              {/* Notes */}
               <div>
                 <label className="label text-primary font-medium">
                   Additional Notes

@@ -119,7 +119,7 @@ return res.data;
               <span className="font-semibold text-secondary">
                 Posted By:
               </span>{" "}
-              {tuition.postedBy}
+              {tuition.postedBy?tuition.postedBy:'No information available'}
             </p>
 
             <p>

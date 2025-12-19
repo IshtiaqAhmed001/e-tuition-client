@@ -27,6 +27,7 @@ const {
       status: "pending",
       gender: data.gender,
       additionalNotes: data.notes,
+      postedBy:user?.displayName || user?.email
     };
 
     axiosSecure

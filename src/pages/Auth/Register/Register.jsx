@@ -122,7 +122,9 @@ const Register = () => {
               className="input input-bordered w-full"
             />
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1">Phone number is required</p>
+              <p className="text-red-500 text-sm mt-1">
+                Phone number is required
+              </p>
             )}
           </div>
 
@@ -155,13 +157,22 @@ const Register = () => {
               <span className="label-text font-medium">Password</span>
             </label>
             <input
-              {...register("password", { required: true })}
+              {...register("password", {
+                required: true,
+                pattern: {
+                  value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&#]).{6,}$/,
+                  message:
+                    "Password must be at least 6 characters and include a letter, a number, and a special character",
+                },
+              })}
               type="password"
               placeholder="••••••"
               className="input input-bordered w-full"
             />
             {errors.password && (
-              <p className="text-red-500 text-sm mt-1">Password is required</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message || "Password is required"}
+              </p>
             )}
           </div>
 

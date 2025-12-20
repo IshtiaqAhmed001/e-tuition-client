@@ -29,7 +29,7 @@ const Tutors = () => {
               <th>Tutor</th>
               <th>Subjects</th>
               <th>Experience</th>
-              <th className="text-right">Actions</th>
+            
             </tr>
           </thead>
 
@@ -68,12 +68,7 @@ const Tutors = () => {
 
                 <td>{tutor?.profile?.experience} years</td>
 
-                <td className="flex justify-end">
-                 
-                  <button className="btn btn-xs btn-primary hover:bg-secondary border-none">
-                    Profile
-                  </button>
-                </td>
+            
               </tr>
             ))}
           </tbody>

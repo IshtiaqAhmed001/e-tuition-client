@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useLocation, useNavigate } from "react-router";
 const SocialLogin = () => {
-  const { setUser, loginWithGoogle } = useAuth();
+  const {setUser,loginWithGoogle } = useAuth();
   const axiosPublic = useAxiosPublic();
     const location = useLocation();
     const navigate = useNavigate();
@@ -19,11 +19,10 @@ const SocialLogin = () => {
         photo: res.user.photoURL,
         role: "student",
       };
-
+  navigate(location.state || "/", { replace: true });
       axiosPublic
         .post("/users", newUser)
-        .then((res) => {
-          navigate(location.state || "/");
+        .then(() => {
         })
         .catch((error) => console.log(error));
     });

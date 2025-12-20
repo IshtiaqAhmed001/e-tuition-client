@@ -12,6 +12,9 @@ const TopTutors = () => {
       const res = await axiosPublic.get("/users/tutors/topTutors");
       return res.data;
     },
+    refetchOnWindowFocus: false, 
+    retry: 1, 
+    staleTime: 1000 * 60 * 5, 
   });
 
   if (isLoading) {

@@ -91,7 +91,7 @@ window.location.assign(res.data.url);
                   <button
                     className={`font-medium ${
                       app.status === "pending"
-                        ? "text-accent"
+                        ? "text-amber-600"
                         : app?.status === "accepted"
                         ? "text-primary"
                         : "text-error"

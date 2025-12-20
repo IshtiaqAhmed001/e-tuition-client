@@ -146,27 +146,6 @@ const ManageUsers = () => {
                   </select>
                 </td>
 
-                {/* Approval Status */}
-                {/* <td>
-                  <select
-                    disabled={user.role === "admin"}
-                    className={`
-      select select-bordered select-xs bg-base-100
-      ${
-        user?.profile?.approvalStatus === "approved"
-          ? "border-primary text-primary"
-          : "border-accent text-accent"
-      }
-    `}
-                    defaultValue={user?.profile?.approvalStatus || "pending"}
-                    onChange={(e) =>
-                      handleStatusChange(user._id, e.target.value)
-                    }
-                  >
-                    <option value="pending">Pending</option>
-                    <option value="approved">Approved</option>
-                  </select>
-                </td> */}
 
                 <td>{user?.profile?.joinDate}</td>
 

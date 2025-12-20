@@ -5,13 +5,16 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Loading from "../../components/Loading/Loading";
 
 const Tuitions = () => {
-const axiosPublic = useAxiosPublic();    const {data:tuitionsData=[],isLoading} = useQuery({
-      queryKey:['tuitionsData'],
-      queryFn: async ()=>{
-        const res = await axiosPublic.get('/tuitions');
-        return res.data;
-      }
-    })
+  const axiosPublic = useAxiosPublic();
+  const { data: tuitionsData = [], isLoading } = useQuery({
+    queryKey: ["tuitionsData"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/tuitions");
+      return res.data;
+    },
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
   if (isLoading) {
     return <Loading />;
   }

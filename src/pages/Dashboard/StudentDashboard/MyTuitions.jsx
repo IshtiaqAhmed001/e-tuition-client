@@ -136,7 +136,7 @@ const MyTuitions = () => {
                 <td className="font-semibold text-primary">{tuition.title}</td>
                 <td>{tuition.subject}</td>
                 <td>{tuition.class}</td>
-                <td className="text-accent font-medium">৳{tuition.salary}</td>
+                <td className="text-amber-600 font-medium">৳{tuition.salary}</td>
                 <td>{tuition.daysPerWeek}</td>
 
                 <td>

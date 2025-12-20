@@ -1,80 +1,122 @@
-import { FaPhone, FaEnvelope, FaLocationArrow } from "react-icons/fa";
+import {
+  FaPhoneAlt,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaPaperPlane,
+} from "react-icons/fa";
 
 const Contact = () => {
   return (
-    <div className="min-h-screen bg-base-200 text-base-content">
-      {/* Hero */}
-      <div
-        className="hero min-h-[50vh] relative"
-        style={{
-          backgroundImage:
-            "url('https://i.ibb.co/LhRSczXt/volodymyr-hryshchenko-V5vq-WC9gy-EU-unsplash.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "cener",
-        }}
-      >
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="hero-content text-center relative text-white">
-          <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
-          <p className="max-w-xl mx-auto opacity-90">
-            We'd love to hear from you! Reach out anytime.
+    <section className="bg-base-200 text-base-content">
+      {/* HERO */}
+      <div className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "url('https://i.ibb.co/LhRSczXt/volodymyr-hryshchenko-V5vq-WC9gy-EU-unsplash.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        {/* overlay using theme colors */}
+        <div className="absolute inset-0 bg-black/50" />
+
+        <div className="relative z-10 text-center text-white px-4">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            Contact Our Team
+          </h1>
+          <p className="max-w-xl mx-auto text-lg opacity-95">
+            We’re here to help students and tutors succeed together.
           </p>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-6xl mx-auto py-16 px-4 grid md:grid-cols-2 gap-12">
-        {/* form */}
-        <div className="bg-base-100 rounded-2xl p-8 shadow border border-base-300">
-          <h2 className="text-2xl font-semibold text-primary mb-6">
-            Send us a Message
-          </h2>
+      {/* CONTENT */}
+      <div className="max-w-7xl mx-auto px-4 py-20">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          {/* LEFT INFO */}
+          <div className="space-y-10">
+            <div>
+              <h2 className="text-3xl font-bold text-primary mb-4">
+                Let’s Talk
+              </h2>
+              <p className="opacity-80 max-w-md">
+                Have questions, feedback, or need support? Reach out and our
+                team will get back to you shortly.
+              </p>
+            </div>
 
-          <form className="space-y-5">
-            <input
-              type="text"
-              placeholder="Your Name"
-              className="input input-bordered w-full"
-            />
-            <input
-              type="email"
-              placeholder="Your Email"
-              className="input input-bordered w-full"
-            />
-            <textarea
-              placeholder="Message"
-              className="textarea textarea-bordered w-full h-32"
-            />
-            <button className="btn btn-primary w-full text-white">
-              Send Message
-            </button>
-          </form>
-        </div>
+            {/* INFO CARDS */}
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div className="card bg-base-100 shadow-md p-6 flex items-center gap-4">
+                <div className="p-3 rounded-full bg-secondary/10 text-secondary">
+                  <FaPhoneAlt className="text-xl" />
+                </div>
+                <div>
+                  <p className="font-semibold">Phone</p>
+                  <p className="text-sm opacity-70">+880 1234 567890</p>
+                </div>
+              </div>
 
-        {/* contact info */}
-        <div className="flex flex-col gap-8">
-          <div className="card bg-base-100 p-6 border border-base-300 shadow rounded-xl">
-            <FaPhone className="text-primary text-3xl mb-3" />
-            <h3 className="text-xl font-semibold">Phone</h3>
-            <p className="opacity-80">+880 1234 567890</p>
+              <div className="card bg-base-100 shadow-md p-6 flex items-center gap-4">
+                <div className="p-3 rounded-full bg-secondary/10 text-secondary">
+                  <FaEnvelope className="text-xl" />
+                </div>
+                <div>
+                  <p className="font-semibold">Email</p>
+                  <p className="text-sm opacity-70">contact@etuitionsbd.com</p>
+                </div>
+              </div>
+
+              <div className="card bg-base-100 shadow-md p-6 flex items-center gap-4 sm:col-span-2">
+                <div className="p-3 rounded-full bg-secondary/10 text-secondary">
+                  <FaMapMarkerAlt className="text-xl" />
+                </div>
+                <div>
+                  <p className="font-semibold">Location</p>
+                  <p className="text-sm opacity-70">Dhaka, Bangladesh</p>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="card bg-base-100 p-6 border border-base-300 shadow rounded-xl">
-            <FaEnvelope className="text-primary text-3xl mb-3" />
-            <h3 className="text-xl font-semibold">Email</h3>
-            <p className="opacity-80">contact@etuitionsbd.com</p>
-          </div>
+          {/* FORM */}
+          <div className="card bg-base-100 shadow-xl rounded-3xl p-10">
+            <h3 className="text-2xl font-bold text-center text-primary mb-2">
+              Send a Message
+            </h3>
+            <p className="text-center text-sm opacity-70 mb-8">
+              We usually respond within 24 hours
+            </p>
 
-          <div className="card bg-base-100 p-6 border border-base-300 shadow rounded-xl">
-            <FaLocationArrow className="text-primary text-3xl mb-3" />
-            <h3 className="text-xl font-semibold">Address</h3>
-            <p className="opacity-80">Dhaka, Bangladesh</p>
+            <form className="space-y-5">
+              <input
+                type="text"
+                placeholder="Your Name"
+                className="input input-bordered w-full"
+              />
+
+              <input
+                type="email"
+                placeholder="Your Email"
+                className="input input-bordered w-full"
+              />
+
+              <textarea
+                placeholder="Write your message..."
+                className="textarea textarea-bordered w-full h-32"
+              />
+
+              <button className="btn btn-primary w-full gap-2 text-white">
+                <FaPaperPlane />
+                Send Message
+              </button>
+            </form>
           </div>
         </div>
       </div>
-
-      {/* Map placeholder */}
-    </div>
+    </section>
   );
 };
 

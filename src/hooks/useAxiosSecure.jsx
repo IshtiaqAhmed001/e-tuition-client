@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://e-tuition-server-khaki.vercel.app",
 });
 
 const useAxiosSecure = () => {

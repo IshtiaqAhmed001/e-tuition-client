@@ -56,8 +56,6 @@ export const router = createBrowserRouter([
             <Tutors />
           </PrivateRoute>
         ),
-        hydrateFallbackElement: <Loading />,
-        loader: () => fetch("/tutorsData.json").then((res) => res.json()),
       },
       { path: "/about", Component: About },
       { path: "/contact", Component: Contact },

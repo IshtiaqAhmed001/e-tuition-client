@@ -1,7 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 import { Link } from "react-router";
+import { FaMapMarkerAlt, FaBookOpen } from "react-icons/fa";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Loading from "../../../components/Loading/Loading";
+import heroCard from '../../../assets/herocard.jpg'
 
 const FeaturedTuitions = () => {
   const axiosPublic = useAxiosPublic();
@@ -10,44 +13,116 @@ const FeaturedTuitions = () => {
     queryKey: ["featuredTuitions"],
     queryFn: async () => {
       const res = await axiosPublic.get("/tuitions");
-      return res.data;
+      return res.data.slice(0, 4);
     },
   });
 
   if (isLoading) return <Loading />;
+  if (!tuitions.length) return null;
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-24 bg-base-100">
       <div className="max-w-7xl mx-auto px-5">
-        <h2 className="text-center text-3xl md:text-4xl font-extrabold text-primary mb-6">
-          Featured Tuitions
-        </h2>
-        <div className="mx-auto w-20 h-1 bg-accent rounded-full mb-10"></div>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-extrabold text-primary">
+            Featured Tuitions
+          </h2>
+          <p className="text-gray-600 mt-2 max-w-xl">
+            Recently approved tuition requests waiting for the right tutor.
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {tuitions.slice(0, 6).map((tuition) => (
-            <div
-              key={tuition._id}
-              className="border rounded-lg p-5 shadow-sm hover:shadow-md transition"
-            >
-              <h3 className="font-semibold text-lg text-primary mb-2">
-                {tuition.title}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* STATIC HERO CARD */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-2 bg-base-100 rounded-3xl overflow-hidden shadow-lg"
+          >
+            {/* Banner */}
+            <div className="relative h-56">
+              <img
+                src={heroCard}
+                alt="Tuition Example"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/40"></div>
+              <span className="absolute bottom-4 left-4 bg-accent text-black px-4 py-1 rounded-full text-sm">
+                Featured
+              </span>
+            </div>
+
+            {/* Static Content */}
+            <div className="p-8">
+              <h3 className="text-2xl font-bold text-primary mb-4">
+                Physics Tutor Needed for Class 9
               </h3>
-              <p className="text-sm text-gray-600 mb-2">
-                Salary: ৳{tuition.salary}
-              </p>
-              <p className="text-sm text-gray-600 mb-4">
-                Days / Week: {tuition.daysPerWeek}
-              </p>
+
+              <div className="flex flex-wrap gap-6 text-gray-600 mb-5">
+                <span className="flex items-center gap-2">
+                  <FaBookOpen />
+                  Science
+                </span>
+                <span className="flex items-center gap-2">
+                  <FaMapMarkerAlt />
+                  Gulshan, Dhaka
+                </span>
+              </div>
+
+              <p className="text-gray-700 mb-6">Budget: ৳5000 • 3 days/week</p>
 
               <Link
-                to={`/tuitions`}
-                className="text-secondary font-semibold text-sm"
+                to="/tuitions"
+                className="btn bg-secondary text-white border-0"
               >
-                View Details →
+                Browse All Tuitions
               </Link>
             </div>
-          ))}
+          </motion.div>
+
+          {/* DYNAMIC LIST */}
+          <div className="space-y-6">
+            {tuitions.map((tuition, index) => (
+              <motion.div
+                key={tuition._id}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ amount: 0.3 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="group bg-base-100 border-l-4 border-secondary rounded-xl p-5 hover:shadow-lg transition"
+              >
+                <h4 className="font-semibold text-primary group-hover:text-secondary transition">
+                  {tuition.title}
+                </h4>
+
+                <p className="text-sm text-gray-600 mt-2">
+                  {tuition.subject} • {tuition.location}
+                </p>
+
+                <div className="flex justify-between items-center mt-4">
+                  <span className="text-sm text-gray-500">
+                    ৳{tuition.salary}
+                  </span>
+
+                  <Link
+                    to={`/tuitions/${tuition._id}`}
+                    className="text-secondary font-medium"
+                  >
+                    View →
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

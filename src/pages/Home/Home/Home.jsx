@@ -12,7 +12,7 @@ const Home = () => {
       <TopTutors />
       <FeaturedTuitions />
       <Stats />
-      {/* <HomeCTA /> */}
+   
     </div>
   );
 };

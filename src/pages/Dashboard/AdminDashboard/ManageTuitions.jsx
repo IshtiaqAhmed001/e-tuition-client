@@ -1,17 +1,21 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Loading from "../../../components/Loading/Loading";
+import Swal from "sweetalert2";
 
 const ManageTuitions = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: tuitions = [], refetch } = useQuery({
+  const { data: tuitions = [],isLoading, refetch } = useQuery({
     queryKey: ["tuitions"],
     queryFn: async () => {
       const res = await axiosSecure.get("/admin/tuitions");
       return res.data;
     },
   });
+
+ 
 
   // Approve or Reject handler
   const handleStatusChange = async (id, newStatus) => {
@@ -21,15 +25,27 @@ const ManageTuitions = () => {
       });
 
       if (res.data.modifiedCount) {
-        alert(`Tuition marked as ${newStatus}`);
+      Swal.fire({
+        icon: "success",
+        title: `Tuition ${newStatus}`,
+        text: `The tuition has been successfully marked as ${newStatus}.`,
+        confirmButtonColor: "#007C63",
+      });
         refetch();
       }
     } catch (error) {
       console.error(error);
-      alert("Failed to update status");
+     Swal.fire({
+       icon: "error",
+       title: "Update Failed",
+       text: "Failed to update tuition status.",
+       confirmButtonColor: "#FFD166",
+     });
     }
   };
-
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">
       <h1 className="text-3xl font-bold text-primary mb-6">Manage Tuitions</h1>

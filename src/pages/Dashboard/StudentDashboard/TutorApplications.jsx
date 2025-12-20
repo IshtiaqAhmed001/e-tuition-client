@@ -3,13 +3,14 @@ import React from "react";
 import { FaEnvelope, FaUserTie } from "react-icons/fa6";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
+import Loading from "../../../components/Loading/Loading";
 
 const TutorApplications = () => {
 
   const axiosSecure = useAxiosSecure();
 const {user}=useAuth();
 
-  const { data: applications = [], refetch } = useQuery({
+  const { data: applications = [], refetch,isLoading } = useQuery({
     queryKey: ["my-applications"],
     queryFn: async () => {
       const res = await axiosSecure.get("/applications");
@@ -44,6 +45,10 @@ const {user}=useAuth();
 const res = await axiosSecure.post("/payment-checkout-session", paymentInfo);
 window.location.assign(res.data.url);
   }
+
+    if (isLoading) {
+      return <Loading />;
+    }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">

@@ -15,7 +15,7 @@ const UpdateOtherUser = () => {
   const {
     data: user = {},
     isLoading,
-    refetch,
+    refetch
   } = useQuery({
     queryKey: ["admin-user", id],
     queryFn: async () => {

@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
+import Loading from "../../../components/Loading/Loading";
 
 const OngoingTuitions = () => {
   const axiosSecure = useAxiosSecure();
@@ -11,7 +12,7 @@ const OngoingTuitions = () => {
 
   const { register, handleSubmit, reset } = useForm();
 
-  const { data: applications = [], refetch } = useQuery({
+  const { data: applications = [], refetch,isLoading } = useQuery({
     queryKey: ["tutor-ongoing-tuitions"],
     queryFn: async () => {
       const res = await axiosSecure.get("/applications");
@@ -101,6 +102,10 @@ const handleDeleteApplication = async (application) => {
     });
   }
 };
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">
       <h1 className="text-3xl font-bold text-primary mb-6">Ongoing Tuitions</h1>

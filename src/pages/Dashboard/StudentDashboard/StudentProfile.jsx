@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import Loading from "../../../components/Loading/Loading";
 
 const StudentProfile = () => {
   const axiosSecure = useAxiosSecure();
@@ -11,7 +12,7 @@ const StudentProfile = () => {
 
   const { register, handleSubmit } = useForm();
 
-  const { data: profile = {}, refetch } = useQuery({
+  const { data: profile = {}, refetch,isLoading } = useQuery({
     queryKey: ["user", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`users/${user.email}/profile`);
@@ -42,6 +43,9 @@ const StudentProfile = () => {
       });
     }
   };
+    if (isLoading) {
+      return <Loading />;
+    }
 
   return (
     <div className="p-6">

@@ -2,16 +2,20 @@ import React from "react";
 import { FaEnvelope, FaUserTie, FaLocationDot } from "react-icons/fa6";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Loading from "../../components/Loading/Loading";
 
 const Tutors = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: tutors = [] } = useQuery({
+  const { data: tutors = [],isLoading } = useQuery({
     queryKey: ["tutors"],
     queryFn: async () => {
       const result = await axiosSecure.get("/users/tutors");
       return result.data;
     },
   });
+    if (isLoading) {
+      return <Loading />;
+    }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">

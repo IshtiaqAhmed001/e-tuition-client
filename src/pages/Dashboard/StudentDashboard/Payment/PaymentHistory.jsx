@@ -2,12 +2,13 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import Loading from '../../../../components/Loading/Loading';
 
 const PaymentHistory = () => {
 
     const {user}=useAuth();
     const axiosSecure = useAxiosSecure();
-    const {data:payments=[]}=useQuery({
+    const {data:payments=[],isLoading}=useQuery({
         queryKey:['payments',user.email],
         queryFn: async()=>{
 const res = await axiosSecure.get(`/payments?email=${user.email}`);
@@ -15,6 +16,9 @@ return res.data;
         }
     })
 
+      if (isLoading) {
+        return <Loading />;
+      }
     return (
       <div className="max-w-7xl mx-auto px-4 py-20">
         <h1 className="text-3xl font-bold text-primary mb-6">

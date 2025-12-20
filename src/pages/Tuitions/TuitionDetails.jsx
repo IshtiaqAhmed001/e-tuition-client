@@ -7,6 +7,7 @@ import useRole from "../../hooks/useRole";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import Loading from "../../components/Loading/Loading";
 
 const TuitionDetails = () => {
     const {user}=useAuth();
@@ -15,7 +16,7 @@ const TuitionDetails = () => {
 const axiosSecure = useAxiosSecure();
   const applyModalRef = useRef();
    
-  const {data:tuition ={}} = useQuery({
+  const {data:tuition ={},isLoading} = useQuery({
     queryKey:['tuition'],
     queryFn: async()=>{
 const res = await axiosSecure.get(`/tuitions/${id}/details`);
@@ -54,7 +55,9 @@ return res.data;
     console.error(error.message);
   }
    };
-
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">
       {/* Title */}

@@ -24,8 +24,6 @@ const RevenueHistory = () => {
     },
   });
 
-  console.log(revenue)
-
   if (isLoading) return <Loading />;
 
   

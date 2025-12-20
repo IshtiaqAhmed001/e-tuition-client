@@ -5,6 +5,7 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
+import Loading from "../../../components/Loading/Loading";
 
 const MyTuitions = () => {
   const axiosSecure = useAxiosSecure();
@@ -15,7 +16,7 @@ const MyTuitions = () => {
 
   const { register, handleSubmit, reset: formReset } = useForm();
 
-  const { data: myTuitions = [], refetch } = useQuery({
+  const { data: myTuitions = [], refetch ,isLoading} = useQuery({
     queryKey: ["myTuitions", user?.email],
     enabled: !!user?.email && !loading,
     queryFn: async () => {
@@ -103,7 +104,9 @@ const MyTuitions = () => {
       });
     }
   };
-
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">
       <h1 className="text-3xl font-bold text-primary mb-6">

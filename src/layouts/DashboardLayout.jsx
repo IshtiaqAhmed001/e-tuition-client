@@ -22,12 +22,11 @@ const DashboardLayout = () => {
 
   const navLinkStyle =
     "is-drawer-close:tooltip is-drawer-close:tooltip-right tooltip-accent hover:bg-accent hover:text-primary transition-colors";
-  // const navLinkStyle =
-  //   "is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-primary/10 hover:text-primary transition-colors";
 
-  if(roleLoading){
-    return <Loading/>
+  if (roleLoading) {
+    return <Loading />;
   }
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -38,9 +37,8 @@ const DashboardLayout = () => {
           <label
             htmlFor="my-drawer-4"
             aria-label="open sidebar"
-            className="btn btn-square btn-ghost hover:bg-secondary border-none shadow-none  text-neutral"
+            className="btn btn-square btn-ghost hover:bg-secondary border-none shadow-none text-neutral"
           >
-            {/* icon */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -69,10 +67,20 @@ const DashboardLayout = () => {
 
       {/* SIDEBAR */}
       <div className="drawer-side is-drawer-close:overflow-visible">
-        <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
+        <label
+          htmlFor="my-drawer-4"
+          className="drawer-overlay bg-black/40"
+        ></label>
 
-        <div className="flex min-h-full flex-col bg-neutral/10 is-drawer-close:w-14 is-drawer-open:w-64 border-r border-primary/20">
-          <ul className="menu w-full grow text-primary font-medium">
+        <div
+          className="
+            flex min-h-full flex-col
+            bg-neutral lg:bg-neutral/10
+            is-drawer-close:w-14 is-drawer-open:w-64
+            border-r border-primary/20
+          "
+        >
+          <ul className="menu w-full grow text-primary font-medium bg-transparent">
             {/* HOME */}
             <li>
               <Link className={navLinkStyle} to="/" data-tip="Dashboard Home">
@@ -88,13 +96,13 @@ const DashboardLayout = () => {
                   <Link
                     to="/dashboard/student/profile"
                     className={navLinkStyle}
-                    // className={navLinkStyle}
                     data-tip="My Profile"
                   >
                     <FaUser className="size-4" />
                     <span className="is-drawer-close:hidden">Profile</span>
                   </Link>
                 </li>
+
                 <li>
                   <Link
                     to="/dashboard/student/post-tuition"
@@ -116,6 +124,7 @@ const DashboardLayout = () => {
                     <span className="is-drawer-close:hidden">My Tuitions</span>
                   </Link>
                 </li>
+
                 <li>
                   <Link
                     to="/dashboard/student/tutor-applications"
@@ -128,6 +137,7 @@ const DashboardLayout = () => {
                     </span>
                   </Link>
                 </li>
+
                 <li>
                   <Link
                     to="/dashboard/student/payment-history"
@@ -156,6 +166,7 @@ const DashboardLayout = () => {
                     <span className="is-drawer-close:hidden">Profile</span>
                   </Link>
                 </li>
+
                 <li>
                   <Link
                     to="/dashboard/tutor/ongoing-tuitions"
@@ -183,6 +194,7 @@ const DashboardLayout = () => {
                 </li>
               </>
             )}
+
             {/* ADMIN PANEL */}
             {role === "admin" && (
               <>

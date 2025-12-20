@@ -4,11 +4,12 @@ import { FaUserEdit, FaTrashAlt, FaEye } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
+import Loading from "../../../components/Loading/Loading";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: users = [], refetch: refetchUsers } = useQuery({
+  const { data: users = [], refetch: refetchUsers,isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const result = await axiosSecure.get("/users");
@@ -88,22 +89,9 @@ const ManageUsers = () => {
     }
   };
 
-  // const handleStatusChange = async (userId, newStatus) => {
-  //   try {
-  //     const res = await axiosSecure.patch(`/admin/users/${userId}/status`, {
-  //       approvalStatus: newStatus,
-  //     });
-
-  //     if (res.data.modifiedCount) {
-  //       alert(`Status updated to ${newStatus}`);
-  //       refetchUsers();
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert("Failed to update status");
-  //   }
-  // };
-  return (
+  if (isLoading) {
+    return <Loading />;
+  }  return (
     <div className="max-w-7xl mx-auto px-4 py-20">
       <h1 className="text-3xl font-bold text-primary mb-6">Manage Users</h1>
 

@@ -6,27 +6,24 @@ import SocialLogin from "../../../components/SocialLogin/SocialLogin";
 
 const Login = () => {
   const [authError, setAuthError] = useState(""); // for auth errors
-
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
-
   const { loginUser, setUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
   const handleLogin = (data) => {
-    setAuthError(""); // reset previous error
+    setAuthError("");
     loginUser(data.email, data.password)
       .then((res) => {
         setUser(res.user);
         navigate(location.state || "/");
       })
       .catch((error) => {
-        console.log(error.code, error.message);
-        // show human-readable error
         if (error.code === "auth/wrong-password") {
           setAuthError("Incorrect password. Please try again.");
         } else if (error.code === "auth/user-not-found") {
@@ -35,6 +32,17 @@ const Login = () => {
           setAuthError("Login failed. Please try again.");
         }
       });
+  };
+
+  // Demo login handler
+  const handleDemoLogin = () => {
+    const demoEmail = "demo@etuitionbd.com";
+    const demoPassword = "UserDemo112233##";
+    // Auto-fill the form
+    setValue("email", demoEmail);
+    setValue("password", demoPassword);
+    // Automatically login
+    handleLogin({ email: demoEmail, password: demoPassword });
   };
 
   return (
@@ -80,12 +88,20 @@ const Login = () => {
             )}
           </div>
 
-          {/* Login button */}
+          {/* Login buttons */}
           <button
             type="submit"
             className="btn btn-primary w-full mt-2 hover:bg-secondary"
           >
             Login
+          </button>
+
+          <button
+            type="button"
+            onClick={handleDemoLogin}
+            className="btn btn-secondary w-full mt-2 hover:bg-accent hover:text-black"
+          >
+            Demo Login
           </button>
 
           {/* Social login */}

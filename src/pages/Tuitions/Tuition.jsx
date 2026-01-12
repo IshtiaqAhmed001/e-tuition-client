@@ -36,6 +36,11 @@ const Tuition = ({ tuition }) => {
         {tuition.schedule}
       </p>
 
+      <p className="mt-1 text-sm text-gray-500">
+        <span className="font-semibold text-secondary">Posted:</span>{" "}
+        {new Date(tuition.postedDate).toLocaleDateString()}
+      </p>
+
       {/* Salary */}
       <p className="text-xl font-bold text-primary mt-4">৳ {tuition.salary}</p>
 
@@ -51,7 +56,10 @@ const Tuition = ({ tuition }) => {
           {tuition.status}
         </span>
 
-        <Link to={`/tuitions/${tuition._id}/details`} className="btn btn-sm bg-primary border-none hover:bg-secondary text-neutral">
+        <Link
+          to={`/tuitions/${tuition._id}/details`}
+          className="btn btn-sm bg-primary border-none hover:bg-secondary text-neutral"
+        >
           Details
         </Link>
       </div>

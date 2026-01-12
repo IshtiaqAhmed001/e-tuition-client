@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Tuition from "./Tuition";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-import Loading from "../../components/Loading/Loading";
 import { FaSearch } from "react-icons/fa";
 import SkeletonTuition from "./SkeletonTuition";
 
@@ -10,6 +9,9 @@ const Tuitions = () => {
   const axiosPublic = useAxiosPublic();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filterLocation, setFilterLocation] = useState("");
+  const [filterSubject, setFilterSubject] = useState("");
+  const [sortField, setSortField] = useState("");
   const itemsPerPage = 8;
 
   const { data: tuitionsData = [], isLoading } = useQuery({
@@ -22,13 +24,41 @@ const Tuitions = () => {
     retry: 1,
   });
 
-  const filteredTuitions = tuitionsData.filter((tuition) => {
-    const term = searchTerm.toLowerCase();
-    return (
-      tuition.title?.toLowerCase().includes(term) ||
-      tuition.location?.toLowerCase().includes(term)
-    );
-  });
+  // Extract unique locations and subjects for filter dropdowns
+  const locations = useMemo(
+    () => [...new Set(tuitionsData.map((t) => t.location))],
+    [tuitionsData]
+  );
+  const subjects = useMemo(
+    () => [...new Set(tuitionsData.map((t) => t.subject))],
+    [tuitionsData]
+  );
+
+  // Filter + Search
+  const filteredTuitions = useMemo(() => {
+    return tuitionsData
+      .filter((tuition) => {
+        const term = searchTerm.toLowerCase();
+        const matchesSearch =
+          tuition.title?.toLowerCase().includes(term) ||
+          tuition.location?.toLowerCase().includes(term);
+        const matchesLocation = filterLocation
+          ? tuition.location === filterLocation
+          : true;
+        const matchesSubject = filterSubject
+          ? tuition.subject === filterSubject
+          : true;
+        return matchesSearch && matchesLocation && matchesSubject;
+      })
+      .sort((a, b) => {
+        if (!sortField) return 0;
+        if (sortField === "salary") return b.salary - a.salary;
+        if (sortField === "daysPerWeek") return b.daysPerWeek - a.daysPerWeek;
+        if (sortField === "postedDate")
+          return new Date(b.postedDate) - new Date(a.postedDate);
+        return 0;
+      });
+  }, [tuitionsData, searchTerm, filterLocation, filterSubject, sortField]);
 
   const totalPages = Math.ceil(filteredTuitions.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -54,8 +84,9 @@ const Tuitions = () => {
           </p>
         </div>
 
-        {/* Search bar */}
-        <div className="flex justify-center">
+        {/* Filters + Search */}
+        <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
+          {/* Search */}
           <div className="relative w-full max-w-md">
             <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 z-10 text-base-content/60 pointer-events-none" />
             <input
@@ -69,6 +100,52 @@ const Tuitions = () => {
               }}
             />
           </div>
+
+          {/* Location Filter */}
+          <select
+            value={filterLocation}
+            onChange={(e) => {
+              setFilterLocation(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="select select-bordered bg-base-100 text-base-content rounded-xl w-40"
+          >
+            <option value="">All Locations</option>
+            {locations.map((loc) => (
+              <option key={loc} value={loc}>
+                {loc}
+              </option>
+            ))}
+          </select>
+
+          {/* Subject Filter */}
+          <select
+            value={filterSubject}
+            onChange={(e) => {
+              setFilterSubject(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="select select-bordered bg-base-100 text-base-content rounded-xl w-40"
+          >
+            <option value="">All Subjects</option>
+            {subjects.map((sub) => (
+              <option key={sub} value={sub}>
+                {sub}
+              </option>
+            ))}
+          </select>
+
+          {/* Sorting */}
+          <select
+            value={sortField}
+            onChange={(e) => setSortField(e.target.value)}
+            className="select select-bordered bg-base-100 text-base-content rounded-xl w-44"
+          >
+            <option value="">Sort By</option>
+            <option value="salary">Salary (High to Low)</option>
+            <option value="daysPerWeek">Days/Week (High to Low)</option>
+            <option value="postedDate">Posted Date (Newest)</option>
+          </select>
         </div>
 
         {/* Results count */}
@@ -86,11 +163,7 @@ const Tuitions = () => {
             [...Array(4)].map((_, idx) => <SkeletonTuition key={idx} />)
           ) : currentTuitions.length > 0 ? (
             currentTuitions.map((tuition) => (
-              <Tuition
-                tuition={tuition}
-                key={tuition._id}
-                className="bg-base-100 rounded-2xl shadow hover:shadow-lg transition p-5"
-              />
+              <Tuition tuition={tuition} key={tuition._id} />
             ))
           ) : (
             <p className="text-center col-span-full text-base-content/60">

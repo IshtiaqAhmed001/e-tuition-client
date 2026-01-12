@@ -21,7 +21,7 @@ const FeaturedTuitions = () => {
   if (!tuitions.length) return null;
 
   return (
-    <section className="py-24 bg-base-200">
+    <section className="py-24 bg-neutral">
       <div className="max-w-7xl mx-auto px-5">
         {/* Header */}
         <motion.div

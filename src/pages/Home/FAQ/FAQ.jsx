@@ -33,7 +33,7 @@ const FAQ = () => {
   };
 
   return (
-    <section className="py-24 bg-neutral">
+    <section className="py-24 bg-base-200">
       <div className="max-w-7xl mx-auto px-5">
         {/* Section Title */}
         <motion.div

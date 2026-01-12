@@ -93,17 +93,18 @@ const ManageUsers = () => {
     return <Loading />;
   }  return (
     <div className="max-w-7xl mx-auto px-4 py-20">
-      <h1 className="text-3xl font-bold text-primary mb-6">Manage Users</h1>
+      <h1 className="text-3xl md:text-4xl font-extrabold text-primary mb-8 text-center">
+        Manage Users
+      </h1>
 
-      <div className="overflow-x-auto rounded-xl shadow bg-neutral border border-accent/30 mb-10">
-        <table className="table">
+      <div className="overflow-x-auto rounded-2xl shadow-lg bg-neutral border border-accent/30">
+        <table className="table w-full">
           <thead className="bg-primary text-neutral">
             <tr>
               <th>#</th>
               <th>User</th>
               <th>Email</th>
               <th>Role</th>
-              {/* <th>Status</th> */}
               <th>Joined</th>
               <th className="text-right">Actions</th>
             </tr>
@@ -111,7 +112,10 @@ const ManageUsers = () => {
 
           <tbody>
             {users.map((user, idx) => (
-              <tr key={idx} className="hover:bg-accent/20">
+              <tr
+                key={user._id}
+                className="hover:bg-accent/20 transition-colors duration-200"
+              >
                 <td className="font-medium">{idx + 1}</td>
 
                 <td>
@@ -133,10 +137,9 @@ const ManageUsers = () => {
 
                 <td className="text-secondary">{user.email}</td>
 
-                {/* ROLE DROPDOWN (FINAL SIMPLE VERSION) */}
                 <td>
                   <select
-                    className="select select-bordered select-xs bg-base-100 text-primary"
+                    className="select select-bordered select-xs bg-base-100 text-primary hover:border-primary focus:ring-primary/30 focus:border-primary"
                     defaultValue={user.role}
                     onChange={(e) => handleRoleChange(user._id, e.target.value)}
                   >
@@ -146,22 +149,21 @@ const ManageUsers = () => {
                   </select>
                 </td>
 
-
                 <td>{user?.profile?.joinDate}</td>
 
                 <td className="flex gap-2 justify-end">
                   <Link
                     to={`/dashboard/admin/users/${user._id}`}
-                    className="btn btn-xs bg-secondary text-neutral border-none hover:bg-primary"
+                    className="btn btn-xs bg-secondary text-neutral border-none hover:bg-primary hover:text-white"
                   >
-                    <FaEye /> Profile Actions
+                    <FaEye className="mr-1" /> Profile Actions
                   </Link>
 
                   <button
                     onClick={() => handleDeleteUser(user._id)}
                     className="btn btn-xs bg-red-600 text-neutral hover:bg-red-500 border-none"
                   >
-                    <FaTrashAlt /> Delete
+                    <FaTrashAlt className="mr-1" /> Delete
                   </button>
                 </td>
               </tr>

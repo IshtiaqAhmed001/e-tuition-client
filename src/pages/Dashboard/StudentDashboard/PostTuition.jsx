@@ -54,150 +54,86 @@ const {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-start py-10 bg-base-200 px-4">
-      <div className="card w-full max-w-5xl shadow-lg bg-base-100 py-10 px-8">
-        <h2 className="text-3xl font-semibold text-center text-primary mb-8">
+    <div className="min-h-screen flex justify-center items-start py-12 bg-neutral/50 px-4">
+      <div className="w-full max-w-5xl bg-neutral border border-accent/20 rounded-3xl shadow-lg py-10 px-8 md:px-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-10">
           Post a Tuition
         </h2>
 
         <form onSubmit={handleSubmit(handlePost)}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {/* LEFT SIDE */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               <h3 className="text-xl font-semibold text-primary mb-3">
                 Tuition Details
               </h3>
 
-              <div>
-                <label className="label text-primary font-medium">
-                  Tuition Title
-                </label>
-                <input
-                  {...register("title", { required: true })}
-                  type="text"
-                  placeholder="Need Math Tutor for Class 9"
-                  className="input input-bordered w-full"
-                />
-              </div>
-
-              <div>
-                <label className="label text-primary font-medium">
-                  Subjects
-                </label>
-                <input
-                  {...register("subject", { required: true })}
-                  type="text"
-                  placeholder="Math, Physics"
-                  className="input input-bordered w-full"
-                />
-              </div>
-
-              <div>
-                <label className="label text-primary font-medium">Class</label>
-                <input
-                  {...register("class", { required: true })}
-                  type="text"
-                  placeholder="Class 9 / HSC / University"
-                  className="input input-bordered w-full"
-                />
-              </div>
-
-              <div>
-                <label className="label text-primary font-medium">
-                  Days Per Week
-                </label>
-                <input
-                  {...register("daysPerWeek", { required: true })}
-                  type="number"
-                  placeholder="3 days"
-                  className="input input-bordered w-full"
-                />
-              </div>
-
-              <div>
-                <label className="label text-primary font-medium">
-                  Salary Range
-                </label>
-                <input
-                  {...register("salary", { required: true })}
-                  type="text"
-                  placeholder="Enter amount here"
-                  className="input input-bordered w-full"
-                />
-              </div>
-
-              <div>
-                <label className="label text-primary font-medium">
-                  Location
-                </label>
-                <input
-                  {...register("location", { required: true })}
-                  type="text"
-                  placeholder="Dhanmondi, Dhaka"
-                  className="input input-bordered w-full"
-                />
-              </div>
+              {[
+                "title",
+                "subject",
+                "class",
+                "daysPerWeek",
+                "salary",
+                "location",
+              ].map((field) => (
+                <div key={field}>
+                  <label className="label text-primary font-medium capitalize">
+                    {field === "class"
+                      ? "Class"
+                      : field.replace(/([A-Z])/g, " $1")}
+                  </label>
+                  <input
+                    {...register(field, { required: true })}
+                    type={field === "daysPerWeek" ? "number" : "text"}
+                    placeholder={`Enter ${field} here`}
+                    className="input input-bordered w-full bg-base-100 text-base-content placeholder:text-gray-400"
+                  />
+                </div>
+              ))}
             </div>
 
             {/* RIGHT SIDE */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               <h3 className="text-xl font-semibold text-primary mb-3">
                 Your Information
               </h3>
 
-              <div>
-                <label className="label text-primary font-medium">Name</label>
-                <input
-                  defaultValue={user?.displayName}
-                  {...register("name", { required: true })}
-                  type="text"
-                  className="input input-bordered w-full"
-                />
-              </div>
-
-              <div>
-                <label className="label text-primary font-medium">Email</label>
-                <input
-                  defaultValue={user?.email}
-                  disabled
-                  type="email"
-                  className="input input-bordered w-full bg-base-200"
-                />
-              </div>
-
-              <div>
-                <label className="label text-primary font-medium">Phone</label>
-                <input
-                  {...register("phone", { required: true })}
-                  type="text"
-                  placeholder="01XXXXXXXXX"
-                  className="input input-bordered w-full"
-                />
-              </div>
-
-              <div>
-                <label className="label text-primary font-medium">
-                  Gender Preference
-                </label>
-                <input
-                  {...register("gender", { required: true })}
-                  type="text"
-                  placeholder="Male or Female"
-                  className="input input-bordered w-full"
-                />
-              </div>
-
-              <div>
-                <label className="label text-primary font-medium">
-                  Timing Schedule
-                </label>
-                <input
-                  {...register("schedule", { required: true })}
-                  type="text"
-                  placeholder="Morning | Afternoon | Evening"
-                  className="input input-bordered w-full"
-                />
-              </div>
+              {[
+                { label: "Name", key: "name", defaultValue: user?.displayName },
+                {
+                  label: "Email",
+                  key: "email",
+                  defaultValue: user?.email,
+                  disabled: true,
+                },
+                { label: "Phone", key: "phone", placeholder: "01XXXXXXXXX" },
+                {
+                  label: "Gender Preference",
+                  key: "gender",
+                  placeholder: "Male or Female",
+                },
+                {
+                  label: "Timing Schedule",
+                  key: "schedule",
+                  placeholder: "Morning | Afternoon | Evening",
+                },
+              ].map((field) => (
+                <div key={field.key}>
+                  <label className="label text-primary font-medium">
+                    {field.label}
+                  </label>
+                  <input
+                    {...register(field.key, { required: !field.disabled })}
+                    type="text"
+                    defaultValue={field.defaultValue}
+                    disabled={field.disabled}
+                    placeholder={field.placeholder}
+                    className={`input input-bordered w-full bg-base-100 text-base-content placeholder:text-gray-400 ${
+                      field.disabled ? "bg-base-200 cursor-not-allowed" : ""
+                    }`}
+                  />
+                </div>
+              ))}
 
               <div>
                 <label className="label text-primary font-medium">
@@ -207,13 +143,16 @@ const {
                   {...register("notes")}
                   rows={4}
                   placeholder="Student has school after 2 PM, etc"
-                  className="textarea textarea-bordered w-full"
+                  className="textarea textarea-bordered w-full bg-base-100 text-base-content placeholder:text-gray-400"
                 />
               </div>
             </div>
           </div>
 
-          <button type="submit" className="btn btn-primary w-full mt-10">
+          <button
+            type="submit"
+            className="btn btn-primary w-full mt-12 hover:shadow-lg transition-all"
+          >
             Post Tuition
           </button>
         </form>

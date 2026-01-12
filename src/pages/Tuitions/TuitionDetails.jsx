@@ -10,51 +10,51 @@ import Swal from "sweetalert2";
 import Loading from "../../components/Loading/Loading";
 
 const TuitionDetails = () => {
-    const {user}=useAuth();
-    const {role}=useRole();
+  const { user } = useAuth();
+  const { role } = useRole();
   const { id } = useParams();
-const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
   const applyModalRef = useRef();
-   
-  const {data:tuition ={},isLoading} = useQuery({
-    queryKey:['tuition'],
-    queryFn: async()=>{
-const res = await axiosSecure.get(`/tuitions/${id}/details`);
-return res.data;
-    }
-  })
 
- const {
-     register,
-     handleSubmit,
-     reset,
-     formState: { errors },
-   } = useForm();
- 
-   const handleApply = async (data) => {
-     const newApplication = {
-       ...data,
-       tuitionId:id,
-       appliedDate: new Date(),
-     };
- 
-  try {
-    const res = await axiosSecure.post("/applications", newApplication);
+  const { data: tuition = {}, isLoading } = useQuery({
+    queryKey: ["tuition"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/tuitions/${id}/details`);
+      return res.data;
+    },
+  });
 
-    if (res.data?.insertedId) {
-     Swal.fire({
-       icon: "success",
-       title: "Application Submitted!",
-       text: "Your application has been sent successfully.",
-       confirmButtonColor: "#007C63", // matches your primary color
-     });
-      reset();
-      applyModalRef.current.close();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const handleApply = async (data) => {
+    const newApplication = {
+      ...data,
+      tuitionId: id,
+      appliedDate: new Date(),
+    };
+
+    try {
+      const res = await axiosSecure.post("/applications", newApplication);
+
+      if (res.data?.insertedId) {
+        Swal.fire({
+          icon: "success",
+          title: "Application Submitted!",
+          text: "Your application has been sent successfully.",
+          confirmButtonColor: "#007C63", // matches your primary color
+        });
+        reset();
+        applyModalRef.current.close();
+      }
+    } catch (error) {
+      console.error(error.message);
     }
-  } catch (error) {
-    console.error(error.message);
-  }
-   };
+  };
   if (isLoading) {
     return <Loading />;
   }
@@ -122,7 +122,7 @@ return res.data;
               <span className="font-semibold text-secondary">
                 Posted By:
               </span>{" "}
-              {tuition.postedBy?tuition.postedBy:'No information available'}
+              {tuition.postedBy ? tuition.postedBy : "No information available"}
             </p>
 
             <p>

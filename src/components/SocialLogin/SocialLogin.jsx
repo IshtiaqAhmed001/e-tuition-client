@@ -32,7 +32,14 @@ const SocialLogin = () => {
     <button
       onClick={handleGoogleSignIn}
       type="button"
-      className="btn w-full gap-2 bg-white border border-gray-300 hover:bg-base-200"
+      className="
+    btn w-full gap-2 
+    bg-base-100 dark:bg-neutral 
+    border border-gray-300 dark:border-gray-600 
+    text-primary dark:text-neutral 
+    hover:bg-base-200 dark:hover:bg-base-300
+    transition-colors
+  "
     >
       <FcGoogle className="text-xl" />
       Login with Google

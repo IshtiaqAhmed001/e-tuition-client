@@ -108,11 +108,13 @@ const handleDeleteApplication = async (application) => {
   }
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">
-      <h1 className="text-3xl font-bold text-primary mb-6">Ongoing Tuitions</h1>
+      <h1 className="text-3xl font-bold text-primary mb-8 text-center">
+        Ongoing Tuitions
+      </h1>
 
-      <div className="overflow-x-auto rounded-xl shadow bg-neutral border border-accent/30">
-        <table className="table">
-          <thead className="bg-primary text-neutral">
+      <div className="overflow-x-auto rounded-2xl shadow-lg bg-base-200 border border-base-300">
+        <table className="table w-full">
+          <thead className="bg-primary text-base-100">
             <tr>
               <th>#</th>
               <th>Tuition Title</th>
@@ -125,8 +127,11 @@ const handleDeleteApplication = async (application) => {
 
           <tbody>
             {applications.map((app, idx) => (
-              <tr key={app._id} className="hover:bg-accent/20">
-                <td>{idx + 1}</td>
+              <tr
+                key={app._id}
+                className="hover:bg-accent/20 transition-colors duration-200"
+              >
+                <td className="font-medium">{idx + 1}</td>
 
                 <td className="font-semibold text-primary">
                   {app.tuitionTitle}
@@ -137,7 +142,7 @@ const handleDeleteApplication = async (application) => {
                 <td
                   className={`font-medium ${
                     app.status === "pending"
-                      ? "text-yellow-600"
+                      ? "text-yellow-400"
                       : app.status === "accepted"
                       ? "text-primary"
                       : "text-error"
@@ -161,8 +166,8 @@ const handleDeleteApplication = async (application) => {
                       disabled={app.status !== "pending"}
                       className={`btn btn-xs border-none ${
                         app.status === "pending"
-                          ? "bg-accent hover:bg-secondary"
-                          : "bg-gray-300 cursor-not-allowed"
+                          ? "bg-accent hover:bg-secondary transition-colors"
+                          : "bg-gray-700 text-gray-400 cursor-not-allowed"
                       }`}
                     >
                       Edit
@@ -173,8 +178,8 @@ const handleDeleteApplication = async (application) => {
                       disabled={app.status !== "pending"}
                       className={`btn btn-xs border-none ${
                         app.status === "pending"
-                          ? "bg-error hover:bg-secondary"
-                          : "bg-gray-300 cursor-not-allowed"
+                          ? "bg-error hover:bg-red-600 transition-colors"
+                          : "bg-gray-700 text-gray-400 cursor-not-allowed"
                       }`}
                     >
                       Delete
@@ -187,9 +192,10 @@ const handleDeleteApplication = async (application) => {
         </table>
       </div>
 
+      {/* Edit Application Modal */}
       <dialog ref={editModalRef} className="modal">
-        <div className="modal-box bg-neutral border border-accent/30">
-          <h3 className="font-bold text-2xl text-primary mb-6">
+        <div className="modal-box bg-base-200 border border-base-300 rounded-xl">
+          <h3 className="font-bold text-2xl text-primary mb-6 text-center">
             Edit Application
           </h3>
 
@@ -198,36 +204,30 @@ const handleDeleteApplication = async (application) => {
               onSubmit={handleSubmit(handleUpdateApplication)}
               className="space-y-4"
             >
-              <div>
-                <label className="label">Qualification</label>
-                <input
-                  defaultValue={selectedApplication.qualification}
-                  {...register("qualification", { required: true })}
-                  className="input input-bordered w-full"
-                />
-              </div>
+              <input
+                defaultValue={selectedApplication.qualification}
+                {...register("qualification", { required: true })}
+                placeholder="Qualification"
+                className="input input-bordered w-full"
+              />
 
-              <div>
-                <label className="label">Experience (years)</label>
-                <input
-                  type="number"
-                  defaultValue={selectedApplication.experience}
-                  {...register("experience", { required: true })}
-                  className="input input-bordered w-full"
-                />
-              </div>
+              <input
+                type="number"
+                defaultValue={selectedApplication.experience}
+                {...register("experience", { required: true })}
+                placeholder="Experience (years)"
+                className="input input-bordered w-full"
+              />
 
-              <div>
-                <label className="label">Expected Salary</label>
-                <input
-                  type="number"
-                  defaultValue={selectedApplication.expectedSalary}
-                  {...register("expectedSalary", { required: true })}
-                  className="input input-bordered w-full"
-                />
-              </div>
+              <input
+                type="number"
+                defaultValue={selectedApplication.expectedSalary}
+                {...register("expectedSalary", { required: true })}
+                placeholder="Expected Salary"
+                className="input input-bordered w-full"
+              />
 
-              <div className="modal-action">
+              <div className="modal-action justify-end">
                 <button type="submit" className="btn btn-primary">
                   Update
                 </button>

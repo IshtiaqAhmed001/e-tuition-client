@@ -21,7 +21,7 @@ const DashboardLayout = () => {
   const { role, roleLoading } = useRole();
 
   const navLinkStyle =
-    "is-drawer-close:tooltip is-drawer-close:tooltip-right tooltip-accent hover:bg-accent hover:text-primary transition-colors";
+    "is-drawer-close:tooltip is-drawer-close:tooltip-right tooltip-accent hover:bg-primary hover:text-neutral rounded-lg transition-colors flex items-center gap-3 px-4 py-2";
 
   if (roleLoading) {
     return <Loading />;
@@ -32,8 +32,8 @@ const DashboardLayout = () => {
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
       {/* NAVBAR */}
-      <div className="drawer-content">
-        <nav className="navbar w-full bg-primary text-neutral">
+      <div className="drawer-content flex flex-col min-h-screen">
+        <nav className="navbar w-full bg-primary text-neutral shadow-md">
           <label
             htmlFor="my-drawer-4"
             aria-label="open sidebar"
@@ -62,25 +62,26 @@ const DashboardLayout = () => {
           </div>
         </nav>
 
-        <Outlet />
+        {/* Main content */}
+        <div className="flex-1 p-6 bg-base-200">
+          <Outlet />
+        </div>
       </div>
 
       {/* SIDEBAR */}
-      <div className="drawer-side is-drawer-close:overflow-visible">
-        <label
-          htmlFor="my-drawer-4"
-          className="drawer-overlay bg-black/40"
-        ></label>
+      <div className="drawer-side">
+        <label htmlFor="my-drawer-4" className="drawer-overlay bg-black/40" />
 
         <div
           className="
             flex min-h-full flex-col
             bg-neutral lg:bg-neutral/10
             is-drawer-close:w-14 is-drawer-open:w-64
-            border-r border-primary/20
+            border-r border-base-300
+            text-base-content
           "
         >
-          <ul className="menu w-full grow text-primary font-medium bg-transparent">
+          <ul className="menu w-full grow bg-transparent font-medium space-y-1 p-2">
             {/* HOME */}
             <li>
               <Link className={navLinkStyle} to="/" data-tip="Dashboard Home">
@@ -221,8 +222,18 @@ const DashboardLayout = () => {
                     </span>
                   </Link>
                 </li>
-
                 <li>
+                  <Link
+                    to="/dashboard/admin/all-payments"
+                    className={navLinkStyle}
+                    data-tip="All Payments"
+                  >
+                    <FaMoneyBill className="size-4" />
+                    <span className="is-drawer-close:hidden">All Payments</span>
+                  </Link>
+                </li>
+
+                {/* <li>
                   <Link to="/dashboard/admin/all-payments">
                     <button className={navLinkStyle} data-tip="All Payments">
                       <FaMoneyBill className="size-4" />
@@ -231,7 +242,7 @@ const DashboardLayout = () => {
                       </span>
                     </button>
                   </Link>
-                </li>
+                </li> */}
               </>
             )}
           </ul>

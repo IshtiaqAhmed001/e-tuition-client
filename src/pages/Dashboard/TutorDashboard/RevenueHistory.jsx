@@ -35,28 +35,34 @@ const RevenueHistory = () => {
   }));
 
   return (
-    <div className="p-4 md:p-6 space-y-6">
+    <div className="p-6 max-w-7xl mx-auto space-y-6">
       {/* Page Title */}
-      <h2 className="text-2xl font-bold">Revenue History</h2>
+      <h2 className="text-3xl font-bold text-primary text-center mb-6">
+        Revenue History
+      </h2>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="card bg-base-100 shadow">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="card bg-base-200 shadow-md border border-base-300 rounded-xl">
           <div className="card-body flex-row items-center gap-4">
             <FaMoneyBillWave className="text-4xl text-success" />
             <div>
-              <p className="text-gray-500">Total Earnings</p>
-              <h3 className="text-2xl font-bold">৳ {totalRevenue}</h3>
+              <p className="text-gray-400">Total Earnings</p>
+              <h3 className="text-2xl font-bold text-primary">
+                ৳ {totalRevenue}
+              </h3>
             </div>
           </div>
         </div>
 
-        <div className="card bg-base-100 shadow">
+        <div className="card bg-base-200 shadow-md border border-base-300 rounded-xl">
           <div className="card-body flex-row items-center gap-4">
             <FaReceipt className="text-4xl text-primary" />
             <div>
-              <p className="text-gray-500">Total Payments</p>
-              <h3 className="text-2xl font-bold">{revenue.length}</h3>
+              <p className="text-gray-400">Total Payments</p>
+              <h3 className="text-2xl font-bold text-primary">
+                {revenue.length}
+              </h3>
             </div>
           </div>
         </div>
@@ -64,20 +70,32 @@ const RevenueHistory = () => {
 
       {/* Revenue Chart */}
       {chartData.length > 0 && (
-        <div className="card bg-base-100 shadow">
+        <div className="card bg-base-200 shadow-md border border-base-300 rounded-xl">
           <div className="card-body">
-            <h3 className="font-semibold mb-4 flex items-center gap-2">
+            <h3 className="font-semibold mb-4 flex items-center gap-2 text-primary">
               <FaCalendarAlt /> Earnings Over Time
             </h3>
-
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="amount" strokeWidth={2} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                  <XAxis dataKey="date" stroke="#888" />
+                  <YAxis stroke="#888" />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#1f2937",
+                      borderRadius: "0.5rem",
+                      border: "none",
+                    }}
+                    itemStyle={{ color: "#f3f4f6" }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="amount"
+                    stroke="#10b981"
+                    strokeWidth={2}
+                    dot={{ r: 4, strokeWidth: 2 }}
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -85,12 +103,13 @@ const RevenueHistory = () => {
         </div>
       )}
 
-      <div className="card bg-base-100 shadow">
+      {/* Payment History Table */}
+      <div className="card bg-base-200 shadow-md border border-base-300 rounded-xl">
         <div className="card-body overflow-x-auto">
-          <h3 className="font-semibold mb-4">Payment History</h3>
+          <h3 className="font-semibold mb-4 text-primary">Payment History</h3>
 
-          <table className="table table-zebra">
-            <thead>
+          <table className="table w-full table-zebra">
+            <thead className="bg-primary text-base-100">
               <tr>
                 <th>#</th>
                 <th>Tuition</th>
@@ -102,19 +121,30 @@ const RevenueHistory = () => {
             </thead>
             <tbody>
               {revenue.map((item, index) => (
-                <tr key={item.transactionId}>
+                <tr
+                  key={item.transactionId}
+                  className="hover:bg-accent/20 transition-colors duration-200"
+                >
                   <td>{index + 1}</td>
-                  <td>{item.tuitionTitle}</td>
-                  <td className="font-mono text-xs">{item.trackingId}</td>
-                  <td className="font-semibold">৳ {item.amount}</td>
+                  <td className="font-semibold text-primary">
+                    {item.tuitionTitle}
+                  </td>
+                  <td className="font-mono text-xs text-secondary">
+                    {item.trackingId}
+                  </td>
+                  <td className="font-semibold text-success">
+                    ৳ {item.amount}
+                  </td>
                   <td>{new Date(item.paidAt).toLocaleDateString()}</td>
-                  <td className="text-xs">{item.transactionId}</td>
+                  <td className="text-xs text-secondary">
+                    {item.transactionId}
+                  </td>
                 </tr>
               ))}
 
               {revenue.length === 0 && (
                 <tr>
-                  <td colSpan="6" className="text-center py-6">
+                  <td colSpan="6" className="text-center py-6 text-gray-400">
                     No revenue found
                   </td>
                 </tr>

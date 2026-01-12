@@ -11,19 +11,44 @@ const Navbar = () => {
   const navLinks = (
     <>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink
+          to="/"
+          className={({ isActive }) => (isActive ? "text-accent" : "")}
+        >
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/tuitions">Tuitions</NavLink>
+        <NavLink
+          to="/tuitions"
+          className={({ isActive }) => (isActive ? "text-accent" : "")}
+        >
+          Tuitions
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/tutors">Tutors</NavLink>
+        <NavLink
+          to="/tutors"
+          className={({ isActive }) => (isActive ? "text-accent" : "")}
+        >
+          Tutors
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/about">About</NavLink>
+        <NavLink
+          to="/about"
+          className={({ isActive }) => (isActive ? "text-accent" : "")}
+        >
+          About
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/contact">Contact</NavLink>
+        <NavLink
+          to="/contact"
+          className={({ isActive }) => (isActive ? "text-accent" : "")}
+        >
+          Contact
+        </NavLink>
       </li>
     </>
   );
@@ -42,8 +67,8 @@ const Navbar = () => {
   };
 
   return (
-    <div className="sticky top-0 z-50 bg-primary">
-      <div className="navbar max-w-7xl mx-auto text-neutral">
+    <div className="sticky top-0 z-50 bg-primary text-neutral">
+      <div className="navbar max-w-7xl mx-auto">
         {/* LEFT */}
         <div className="navbar-start">
           {/* Mobile Menu */}
@@ -66,16 +91,20 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-primary rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 p-2 shadow-lg bg-primary text-neutral rounded-box w-52"
             >
               {navLinks}
               {!user && (
                 <>
                   <li>
-                    <NavLink to="/login">Login</NavLink>
+                    <NavLink to="/login" className="hover:text-accent">
+                      Login
+                    </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/register">Register</NavLink>
+                    <NavLink to="/register" className="hover:text-accent">
+                      Register
+                    </NavLink>
                   </li>
                 </>
               )}
@@ -123,14 +152,23 @@ const Navbar = () => {
               </label>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 text-primary rounded-box w-52"
+                className="menu menu-sm dropdown-content absolute mt-2 p-2 shadow-lg bg-primary text-neutral rounded-md w-52 z-50"
               >
-                <li className="font-semibold px-2 py-1">{user.displayName}</li>
-                <li>
-                  <Link to="/dashboard">Dashboard</Link>
+                <li className="font-semibold px-2 py-1 border-b border-accent/30">
+                  {user.displayName}
                 </li>
                 <li>
-                  <button onClick={handleLogout}>Logout</button>
+                  <Link to="/dashboard" className="hover:text-accent">
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="hover:text-accent w-full text-left"
+                  >
+                    Logout
+                  </button>
                 </li>
               </ul>
             </div>

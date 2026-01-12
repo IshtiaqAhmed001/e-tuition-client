@@ -16,20 +16,20 @@ const DashboardHome = () => {
     student: {
       title: "Student Dashboard",
       message:
-        "Welcome to your student dashboard. Manage your tuitions and applications from the sidebar.",
-      icon: <FaUserGraduate className="text-6xl text-primary" />,
+        "Manage your tuitions, track applications, and find the perfect tutors—all from one place.",
+      icon: <FaUserGraduate className="text-6xl text-primary mb-4" />,
     },
     tutor: {
       title: "Tutor Dashboard",
       message:
-        "Welcome to your tutor dashboard. Track your ongoing tuitions and earnings easily.",
-      icon: <FaChalkboardTeacher className="text-6xl text-primary" />,
+        "View ongoing tuitions, track earnings, and connect with students easily.",
+      icon: <FaChalkboardTeacher className="text-6xl text-primary mb-4" />,
     },
     admin: {
       title: "Admin Dashboard",
       message:
-        "Welcome to the admin dashboard. Manage users, tuitions, and platform activity.",
-      icon: <FaUserShield className="text-6xl text-primary" />,
+        "Manage users, tuitions, and platform activity efficiently from here.",
+      icon: <FaUserShield className="text-6xl text-primary mb-4" />,
     },
   };
 
@@ -37,14 +37,14 @@ const DashboardHome = () => {
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4">
-      <div className="w-full max-w-3xl bg-neutral border border-accent/40 rounded-3xl shadow-lg p-8 md:p-12 text-center">
-        <div className="flex justify-center mb-6">{current.icon}</div>
+      <div className="w-full max-w-3xl bg-neutral/80 dark:bg-neutral border border-accent/40 rounded-3xl shadow-lg p-8 md:p-12 text-center transition-colors">
+        <div className="flex justify-center">{current.icon}</div>
 
-        <h1 className="text-3xl md:text-4xl font-bold text-primary">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-primary mb-4">
           {current.title}
         </h1>
 
-        <p className="mt-4 text-gray-600 text-base md:text-lg">
+        <p className="mt-2 text-base-content/70 text-base md:text-lg leading-relaxed">
           {current.message}
         </p>
       </div>

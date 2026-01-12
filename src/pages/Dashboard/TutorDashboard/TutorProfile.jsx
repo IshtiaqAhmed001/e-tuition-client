@@ -57,30 +57,38 @@ const TutorProfile = () => {
   if (loading || isLoading || !tutor?.email) return <Loading />;
 
   return (
-    <div className="p-6 max-w-2xl mx-auto bg-base-200 rounded-xl my-10">
-      <h2 className="text-2xl font-semibold mb-4 text-primary">
+    <div className="max-w-3xl mx-auto p-8 bg-base-100 rounded-2xl shadow-lg border border-base-300 my-12">
+      {/* Title */}
+      <h2 className="text-3xl font-bold text-primary text-center mb-8">
         Tutor Profile
       </h2>
 
-      <div className="flex flex-col items-center mb-6">
-        <img
-          src={tutor.photo}
-          alt="Tutor"
-          className="w-28 h-28 rounded-full border border-base-300 shadow"
-        />
+      {/* Profile Image */}
+      <div className="flex flex-col items-center mb-8">
+        <div className="w-32 h-32 rounded-full overflow-hidden ring-2 ring-primary ring-offset-base-200 ring-offset-2 shadow-md">
+          <img
+            src={tutor.photo}
+            alt="Tutor"
+            className="w-full h-full object-cover"
+          />
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      {/* Form */}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid grid-cols-1 gap-4"
+      >
         <input
           disabled
           defaultValue={tutor.name}
-          className="input input-bordered w-full bg-base-300"
+          className="input input-bordered w-full bg-base-200"
         />
 
         <input
           disabled
           defaultValue={tutor.email}
-          className="input input-bordered w-full bg-base-300"
+          className="input input-bordered w-full bg-base-200"
         />
 
         <input

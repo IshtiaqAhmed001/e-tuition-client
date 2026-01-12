@@ -11,8 +11,8 @@ const Footer = () => {
         {/* About */}
         <div>
           <Logo />
-          <p className="text-sm leading-relaxed">
-            A trusted platform to connect verified tutors with students. We help
+          <p className="text-sm leading-relaxed mt-4 text-gray-200">
+            A trusted platform connecting verified tutors with students. We help
             learners find qualified teachers effortlessly.
           </p>
         </div>

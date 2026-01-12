@@ -49,23 +49,35 @@ const StudentProfile = () => {
 
   return (
     <div className="p-6">
-      <div className="max-w-5xl mx-auto bg-base-200 rounded-xl shadow-md border border-base-300 p-6">
-        <div className="flex items-center gap-6">
+      <div className="max-w-5xl mx-auto bg-neutral border border-accent/20 rounded-3xl shadow-lg p-8 md:p-12">
+        {/* HEADER */}
+        <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
           <div className="avatar">
-            <div className="w-28 rounded-full ring ring-primary ring-offset-base-200 ring-offset-2">
-              <img src={profile.photo} alt="profile" />
+            <div className="w-28 rounded-full ring ring-primary ring-offset-neutral ring-offset-2">
+              <img
+                src={
+                  profile.photo ||
+                  "https://img.daisyui.com/images/profile/demo/2@94.webp"
+                }
+                alt="profile"
+                className="object-cover"
+              />
             </div>
           </div>
-          <div>
-            <h2 className="text-3xl font-bold text-primary">Student Profile</h2>
-            <p className="text-secondary">
+
+          <div className="text-center md:text-left">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-primary">
+              Student Profile
+            </h2>
+            <p className="text-base-content/70 mt-1">
               Manage your student account details
             </p>
           </div>
         </div>
 
-        <div className="divider my-6"></div>
+        <div className="divider my-8"></div>
 
+        {/* FORM */}
         <form
           onSubmit={handleSubmit(handleUpdateProfile)}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
@@ -79,7 +91,7 @@ const StudentProfile = () => {
                 type="text"
                 defaultValue={profile.name}
                 disabled
-                className="input input-bordered w-full bg-base-300"
+                className="input input-bordered w-full bg-base-300 text-base-content/90"
               />
             </div>
 
@@ -89,7 +101,7 @@ const StudentProfile = () => {
                 type="email"
                 defaultValue={profile.email}
                 disabled
-                className="input input-bordered w-full bg-base-300"
+                className="input input-bordered w-full bg-base-300 text-base-content/90"
               />
             </div>
 
@@ -99,7 +111,7 @@ const StudentProfile = () => {
                 type="text"
                 defaultValue={profile.role}
                 disabled
-                className="input input-bordered w-full bg-base-300"
+                className="input input-bordered w-full bg-base-300 text-base-content/90"
               />
             </div>
 
@@ -111,7 +123,7 @@ const StudentProfile = () => {
                 type="text"
                 {...register("photo")}
                 defaultValue={profile.photo}
-                className="input input-bordered w-full bg-base-100"
+                className="input input-bordered w-full bg-base-100 text-base-content"
               />
             </div>
           </div>
@@ -123,7 +135,7 @@ const StudentProfile = () => {
                 type="text"
                 {...register("phone")}
                 defaultValue={profile.phone}
-                className="input input-bordered w-full bg-base-100"
+                className="input input-bordered w-full bg-base-100 text-base-content"
               />
             </div>
 
@@ -133,13 +145,16 @@ const StudentProfile = () => {
                 type="text"
                 {...register("location")}
                 defaultValue={profile.profile?.location}
-                className="input input-bordered w-full bg-base-100"
+                className="input input-bordered w-full bg-base-100 text-base-content"
               />
             </div>
           </div>
 
           <div className="md:col-span-2 text-end mt-6">
-            <button type="submit" className="btn btn-primary px-10">
+            <button
+              type="submit"
+              className="btn btn-primary px-10 hover:shadow-lg transition-all"
+            >
               Save Profile
             </button>
           </div>

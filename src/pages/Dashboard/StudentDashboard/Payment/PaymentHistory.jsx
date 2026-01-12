@@ -21,12 +21,13 @@ return res.data;
       }
     return (
       <div className="max-w-7xl mx-auto px-4 py-20">
-        <h1 className="text-3xl font-bold text-primary mb-6">
+        <h1 className="text-3xl md:text-4xl font-bold text-primary mb-8">
           Payment History: {payments.length}
         </h1>
-        <div className="overflow-x-auto rounded-xl shadow bg-base-100 border border-base-300">
-          <table className="table">
-            <thead className="bg-primary text-base-100">
+
+        <div className="overflow-x-auto rounded-2xl shadow-lg bg-neutral border border-accent/30">
+          <table className="table w-full">
+            <thead className="bg-primary text-neutral">
               <tr>
                 <th>#</th>
                 <th>Tuition Name</th>
@@ -38,20 +39,23 @@ return res.data;
 
             <tbody>
               {payments.map((payment, idx) => (
-                <tr key={payment._id} className="hover:bg-base-200">
-                  <td>{idx + 1}</td>
+                <tr
+                  key={payment._id}
+                  className="hover:bg-base-200 transition-colors duration-200"
+                >
+                  <td className="font-medium">{idx + 1}</td>
 
                   <td className="font-semibold text-primary">
                     {payment.tuitionTitle}
                   </td>
 
-                  <td className="font-medium text-primary">৳{payment.amount}</td>
+                  <td className="font-medium text-amber-600">
+                    ৳{payment.amount}
+                  </td>
 
                   <td className="text-secondary">{payment.trackingId}</td>
 
-                  <td className='text-secondary'>{payment.transactionId}</td>
-
-                
+                  <td className="text-secondary">{payment.transactionId}</td>
                 </tr>
               ))}
             </tbody>

@@ -52,12 +52,12 @@ window.location.assign(res.data.url);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">
-      <h1 className="text-3xl font-bold text-primary mb-6">
+      <h1 className="text-3xl md:text-4xl font-bold text-primary mb-8">
         Tutor Applications
       </h1>
 
-      <div className="overflow-x-auto rounded-xl shadow bg-neutral border border-accent/30 mb-10">
-        <table className="table">
+      <div className="overflow-x-auto rounded-2xl shadow-lg bg-neutral border border-accent/30 mb-10">
+        <table className="table w-full">
           <thead className="bg-primary text-neutral">
             <tr>
               <th>#</th>
@@ -65,65 +65,69 @@ window.location.assign(res.data.url);
               <th>Experience</th>
               <th>Applied For</th>
               <th>Applied Date</th>
-              <th>Application Status</th>
-              <th>Payment Status</th>
+              <th className="text-center">Application Status</th>
+              <th className="text-center">Payment Status</th>
               <th className="text-center">Actions</th>
             </tr>
           </thead>
 
           <tbody>
             {applications.map((app, idx) => (
-              <tr key={idx} className="hover:bg-accent/20 ">
+              <tr
+                key={app._id || idx}
+                className="hover:bg-base-200 transition-colors duration-200"
+              >
                 <td className="font-medium">{idx + 1}</td>
 
                 <td>
-                      <p className="font-semibold text-primary">
-                        {app.tutorName}
-                      </p>
+                  <p className="font-semibold text-primary">{app.tutorName}</p>
                 </td>
 
                 <td>{app.experience} yrs</td>
                 <td>{app.tuitionTitle}</td>
-
                 <td>{new Date(app.appliedDate).toLocaleString()}</td>
 
+                {/* Application Status */}
                 <td className="text-center">
-                  <button
-                    className={`font-medium ${
+                  <span
+                    className={`font-medium px-2 py-1 rounded-full ${
                       app.status === "pending"
-                        ? "text-amber-600"
-                        : app?.status === "accepted"
-                        ? "text-primary"
-                        : "text-error"
+                        ? "bg-amber-100 text-amber-600"
+                        : app.status === "accepted"
+                        ? "bg-primary/20 text-primary"
+                        : "bg-red-100 text-error"
                     }`}
                   >
                     {app.status.toUpperCase()}
-                  </button>
+                  </span>
                 </td>
-                <td className="text-center ">
-                  <button
-                    className={`font-medium cursor-not-allowed ${
+
+                {/* Payment Status */}
+                <td className="text-center">
+                  <span
+                    className={`font-medium px-2 py-1 rounded-full ${
                       app.paymentStatus === "unpaid" ||
                       app.paymentStatus === "pending"
-                        ? "btn btn-xs btn-accent"
-                        : app?.paymentStatus === "paid"
-                        ? "btn btn-xs btn-primary"
-                        : "btn btn-xs btn-error"
+                        ? "bg-accent/20 text-accent"
+                        : app.paymentStatus === "paid"
+                        ? "bg-primary/20 text-primary"
+                        : "bg-red-100 text-error"
                     }`}
                   >
                     {app.paymentStatus.toUpperCase()}
-                  </button>
+                  </span>
                 </td>
 
-                <td className="text-right align-middle">
-                  <div className="flex gap-2 justify-end items-center">
+                {/* Actions */}
+                <td className="text-right">
+                  <div className="flex gap-2 justify-end items-center flex-wrap">
                     <button
                       disabled={app.paymentStatus === "paid"}
                       onClick={() => handlePayment(app)}
                       className={`btn btn-xs border-none ${
                         app.paymentStatus === "paid"
                           ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                          : "bg-accent hover:bg-secondary"
+                          : "bg-accent hover:bg-secondary text-neutral"
                       }`}
                     >
                       Pay
@@ -135,7 +139,7 @@ window.location.assign(res.data.url);
                       className={`btn btn-xs border-none ${
                         app.paymentStatus === "rejected"
                           ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                          : "btn-error hover:bg-secondary"
+                          : "btn-error hover:bg-secondary text-neutral"
                       }`}
                     >
                       Reject

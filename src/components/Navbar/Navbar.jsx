@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import Logo from "../Logo/Logo";
 import Swal from "sweetalert2";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 const Navbar = () => {
   const { user, logoutUser } = useAuth();
@@ -94,6 +95,7 @@ const Navbar = () => {
 
         {/* RIGHT */}
         <div className="navbar-end gap-2">
+          <ThemeToggle />
           {!user ? (
             <>
               <Link
@@ -102,7 +104,10 @@ const Navbar = () => {
               >
                 Login
               </Link>
-              <Link to="/register" className="btn btn-sm bg-accent shadow-none border-0">
+              <Link
+                to="/register"
+                className="btn btn-sm bg-accent shadow-none border-0"
+              >
                 Register
               </Link>
             </>

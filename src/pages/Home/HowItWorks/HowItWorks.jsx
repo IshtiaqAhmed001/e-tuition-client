@@ -43,22 +43,30 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-24 bg-neutral">
-      <div className="max-w-7xl mx-auto text-center">
+    <section className="py-24 bg-base-200">
+      <div className="max-w-7xl mx-auto px-4 text-center">
+        {/* Section Title */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-3xl md:text-4xl font-bold text-primary mb-6"
+          viewport={{ once: true }}
+          className="text-3xl md:text-4xl font-bold text-base-content mb-4"
         >
-          How It Works
+          How It <span className="text-primary">Works</span>
         </motion.h2>
 
-        <p className="text-gray-600 max-w-3xl mx-auto mb-16">
+        {/* Accent Divider */}
+        <div className="flex justify-center mb-10">
+          <span className="w-20 h-1 bg-accent rounded-full"></span>
+        </div>
+
+        <p className="text-base-content/70 max-w-3xl mx-auto mb-16">
           A structured and transparent workflow that ensures quality tutoring,
           verified users, and secure payments.
         </p>
 
+        {/* Steps */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {steps.map((step, i) => (
             <motion.div
@@ -66,17 +74,20 @@ const HowItWorks = () => {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="card bg-white shadow-lg hover:shadow-xl transition-shadow"
+              viewport={{ once: true }}
+              className="bg-base-100 rounded-2xl shadow-lg hover:shadow-xl transition p-8"
             >
-              <div className="card-body items-center text-center">
-                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl mb-4">
-                  {step.icon}
-                </div>
-
-                <h3 className="card-title text-secondary">{step.title}</h3>
-
-                <p className="text-gray-600">{step.desc}</p>
+              <div className="w-14 h-14 mx-auto rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl mb-5">
+                {step.icon}
               </div>
+
+              <h3 className="text-lg font-semibold text-base-content mb-3">
+                {step.title}
+              </h3>
+
+              <p className="text-sm text-base-content/70 leading-relaxed">
+                {step.desc}
+              </p>
             </motion.div>
           ))}
         </div>

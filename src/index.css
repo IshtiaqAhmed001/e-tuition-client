@@ -11,6 +11,15 @@
   --color-neutral: #F2F5F3;  
 }
 
+@plugin "daisyui/theme" {
+  name: "dark";
+
+  --color-primary: #0E9F6E;
+  --color-secondary: #34D399;
+  --color-accent: #FFD166;
+  --color-neutral: #111827;
+}
+
 .active {
   background-color: #0E9F6E;
 }

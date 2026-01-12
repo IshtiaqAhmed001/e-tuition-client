@@ -4,12 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Loading from "../../components/Loading/Loading";
 import { FaSearch } from "react-icons/fa";
+import SkeletonTuition from "./SkeletonTuition";
 
 const Tuitions = () => {
   const axiosPublic = useAxiosPublic();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const itemsPerPage = 6;
+  const itemsPerPage = 8;
 
   const { data: tuitionsData = [], isLoading } = useQuery({
     queryKey: ["tuitionsData"],
@@ -20,8 +21,6 @@ const Tuitions = () => {
     refetchOnWindowFocus: false,
     retry: 1,
   });
-
-  if (isLoading) return <Loading />;
 
   const filteredTuitions = tuitionsData.filter((tuition) => {
     const term = searchTerm.toLowerCase();
@@ -82,8 +81,10 @@ const Tuitions = () => {
         </p>
 
         {/* Tuition grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {currentTuitions.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {isLoading ? (
+            [...Array(4)].map((_, idx) => <SkeletonTuition key={idx} />)
+          ) : currentTuitions.length > 0 ? (
             currentTuitions.map((tuition) => (
               <Tuition
                 tuition={tuition}
